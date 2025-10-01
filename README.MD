@@ -59,7 +59,7 @@ If you want to contribute to or update the project, follow these guidelines:
 1. **Fork the Repository:** Create a personal fork of the repository on GitHub.
 2. **Clone Your Fork:** Clone the forked repository to your local machine.
    ```bash
-   git clone https://github.com/kudzaiprichard/employee-management-system.git
+   git clone https://github.com/starpearl03/employee-management-system.git
    ```
 3. **Create a Branch:** Create a new branch for your changes.
    ```bash
