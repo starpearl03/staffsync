@@ -1,0 +1,12 @@
+target/
+*.class
+*.jar
+*.war
+*.ear
+.env
+*.log
+.DS_Store
+.idea/
+*.iml
+.gradle/
+build/
