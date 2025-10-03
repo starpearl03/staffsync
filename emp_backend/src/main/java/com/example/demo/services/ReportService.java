@@ -1,19 +1,24 @@
 package com.example.demo.services;
 
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Employee;
 import com.example.demo.model.Leave;
 import com.example.demo.model.Report;
 import com.example.demo.model.Task;
 import com.example.demo.repository.ReportRepository;
 import com.example.demo.repository.TaskRepository;
-import com.itextpdf.text.DocumentException;
+import com.example.demo.requestResponse.ExportReportRequest;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -26,21 +31,19 @@ public class ReportService {
 
     @Transactional
     public Report generateReportForEmployee(long employeeId) {
-        Task tasks = taskRepository.findByEmployeeId(employeeId);
-
-        long totalHoursWorked = tasks.calculateHoursWorked();
-
-        double averagePerformance = tasks.calculatePerformance();
-
-        int numberOfLeaves = leaveService.getNumberOfLeaves(employeeId);
-
-        double averageDaysPerLeave = leaveService.getAverageDaysPerLeave(employeeId);
+        Task task = taskRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not retrieve task"));
 
         Report report = Report.builder()
-                .totalHoursWorked(totalHoursWorked)
-                .averagePerformance(averagePerformance)
-                .numberOfLeaves(numberOfLeaves)
-                .averageDaysPerLeave(averageDaysPerLeave)
+                .project(task.getProject())
+                .totalHoursWorked(task.calculateHoursWorked())
+                .averagePerformance(task.calculatePerformance().ratio())
+                .performanceMeasure(task.calculatePerformance().measure())
+                .completionTimeVariance(task.calculateCompletionTimeVariance())
+                .efficiency(task.calculateEfficiency())
+                .numberOfLeaves(leaveService.getNumberOfLeaves(employeeId))
+                .averageDaysPerLeave(leaveService.getAverageDaysPerLeave(employeeId))
+                .taskLengthInHours(task.getDurationInHours())
                 .build();
 
         return reportRepository.save(report);
@@ -106,69 +109,175 @@ public class ReportService {
         return totalDays / leaves.size();
     }
 
-    // Method to export report as CSV
-    public void exportReportAsCSV(String filePath, Long employeeId) throws IOException, IOException {
-        Task task = this.taskRepository.findByEmployeeId(employeeId);
+
+    public String exportReportAsCSV(Long employeeId) throws IOException {
+        Task task = this.taskRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not retrieve task"));
         List<Leave> leaves = this.leaveService.fetchAll(); // Fetch all leaves
 
-        try (FileWriter writer = new FileWriter(filePath)) {
+        // Create ExportReportRequest object
+        ExportReportRequest request = new ExportReportRequest(
+                task.getEmployee().getFirstname() + "_" + task.getEmployee().getLastname()+ "_" + "report" + ".csv"
+        );
+
+        // Calculate performance metrics
+        long totalHoursWorked = task.calculateHoursWorked();
+        Task.PerformanceRecord performanceRecord = task.calculatePerformance();
+        double averagePerformance = performanceRecord.ratio();
+        Task.PerformanceMeasure performanceMeasure = performanceRecord.measure();
+        long completionTimeVariance = task.calculateCompletionTimeVariance();
+        boolean isTaskOnTime = task.isTaskOnTime();
+        double efficiency = task.calculateEfficiency();
+
+        // Specify the directory path
+        String userHome = System.getProperty("user.home");
+        String documentsPath = Paths.get(userHome, "Documents").toString();
+        String filePath = Paths.get(documentsPath, request.getFilePath()).toString();
+
+        // Create the file object
+        File file = new File(filePath);
+
+        // Check if the parent directory exists, if not, create it
+        File parentDir = file.getParentFile();
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
+        // Write to the CSV file
+        try (FileWriter writer = new FileWriter(file)) {
+            // Write header for main report data
+            writer.append("Employee Report\n");
+
+            // Write data rows
+            writer.append("Project Title,Employee Name,Task Title,Duration in Hours\n");
+            writer.append(escapeSpecialCharacters(task.getProject().getTitle())).append(",");
+            writer.append(formatEmployeeName(task.getEmployee())).append(",");
+            writer.append(escapeSpecialCharacters(task.getTitle())).append(",");
+            writer.append(String.valueOf(task.getDurationInHours())).append("\n\n");
+
             // Write performance analytics
             writer.append("Performance Analytics\n");
-            writer.append("Total Hours Worked:,").append(String.valueOf(calculateTotalHoursWorked(task))).append("\n");
-            writer.append("Average Hours per Task:,").append(String.valueOf(calculateAverageHoursPerTask(task))).append("\n\n");
+            writer.append("Task Completion Status,").append(isTaskOnTime ? "On Time" : "Delayed").append(",").append("Indicates whether the task was completed on time or delayed.\n");
+            writer.append("Completion Time Variance,").append(String.valueOf(completionTimeVariance)).append(" hours,").append("Measures the deviation from the planned completion time.\n");
+            writer.append("Total Hours Worked,").append(String.valueOf(totalHoursWorked)).append(" hours,").append("Total hours spent by the employee on the task.\n");
+            writer.append("Average Performance,").append(String.valueOf(averagePerformance)).append(",").append("Ratio of actual hours worked to planned duration.\n");
+            writer.append("Performance Category,").append(performanceMeasure.toString()).append(",").append("Categorizes performance as Excellent, Good, Average, or Poor.\n");
+            writer.append("Efficiency,").append(String.valueOf(efficiency)).append(",").append("Measures the efficiency of time utilization.\n");
+
+            writer.append("\n");
 
             // Write leaves data
             writer.append("Leaves Data\n");
             writer.append("Number of Leaves:,").append(String.valueOf(calculateNumberOfLeaves(leaves))).append("\n");
             writer.append("Average Days per Leave:,").append(String.valueOf(calculateAverageDaysPerLeave(leaves))).append("\n\n");
 
-            // Write header for main report data
-            writer.append("Project Name, Employee Name, Task Title, Duration in Hours\n");
 
-            // Write data rows
-            writer.append(task.getProject().getTitle()).append(",");
-            writer.append(task.getEmployee().getEmail()).append(",");
-            writer.append(task.getEmployee().getFirstname()).append(",");
-            writer.append(task.getEmployee().getLastname()).append(",");
-            writer.append(task.getTitle()).append(",");
-            writer.append(String.valueOf(task.getDurationInHours())).append("\n");
+        } catch (IOException e) {
+            throw new IOException("Error writing to file: " + filePath, e);
         }
+
+        return filePath;
     }
+
+    // Helper method to format employee name
+    private String formatEmployeeName(Employee employee) {
+        return employee.getFirstname() + " " + employee.getLastname();
+    }
+
+    // Helper method to escape special characters in CSV
+    private String escapeSpecialCharacters(String data) {
+        if (data == null) {
+            return "";
+        }
+        return data.replace(",", ";"); // Example of replacing comma with semicolon
+    }
+
 
     // Method to export report as PDF
-    public void exportReportAsPDF(String filePath, Long employeeId) throws IOException, DocumentException {
-        // Similar logic as CSV export, using iText or any other PDF library
-        // Example: Use iText to create PDF
-        // This example demonstrates basic PDF generation, adjust as per your actual data and layout needs
-        Task task = this.taskRepository.findByEmployeeId(employeeId);
+    public String exportReportAsPDF(Long employeeId) throws IOException, DocumentException {
+        Task task = this.taskRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not retrieve task"));
         List<Leave> leaves = this.leaveService.fetchAll(); // Fetch all leaves
 
-        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-        com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        // Calculate performance metrics
+        long totalHoursWorked = task.calculateHoursWorked();
+        Task.PerformanceRecord performanceRecord = task.calculatePerformance();
+        double averagePerformance = performanceRecord.ratio();
+        Task.PerformanceMeasure performanceMeasure = performanceRecord.measure();
+        long completionTimeVariance = task.calculateCompletionTimeVariance();
+        boolean isTaskOnTime = task.isTaskOnTime();
+        double efficiency = task.calculateEfficiency();
+
+        // Manually create ExportReportRequest for PDF
+        ExportReportRequest request = new ExportReportRequest(
+                task.getEmployee().getFirstname() + "_" + task.getEmployee().getLastname() + "_report.pdf"
+        );
+
+        // Specify the directory path for Documents
+        String userHome = System.getProperty("user.home");
+        String documentsPath = Paths.get(userHome, "Documents").toString();
+        String filePath = Paths.get(documentsPath, request.getFilePath()).toString();
+
+        // Create PDF document and write content
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        // Write performance analytics
-        document.add(new com.itextpdf.text.Paragraph("Performance Analytics"));
-        document.add(new com.itextpdf.text.Paragraph("Total Hours Worked: " + calculateTotalHoursWorked(task)));
-        document.add(new com.itextpdf.text.Paragraph("Average Hours per Task: " + calculateAverageHoursPerTask(task)));
-        document.add(new com.itextpdf.text.Paragraph("\n"));
-
-        // Write leaves data
-        document.add(new com.itextpdf.text.Paragraph("Leaves Data"));
-        document.add(new com.itextpdf.text.Paragraph("Number of Leaves: " + calculateNumberOfLeaves(leaves)));
-        document.add(new com.itextpdf.text.Paragraph("Average Days per Leave: " + calculateAverageDaysPerLeave(leaves)));
-        document.add(new com.itextpdf.text.Paragraph("\n"));
+        // Define fonts
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
+        Font headingFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.DARK_GRAY);
+        Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
 
         // Write main report data
-        document.add(new com.itextpdf.text.Paragraph("Project Name: " + task.getProject().getTitle()));
-        document.add(new com.itextpdf.text.Paragraph("Employee Name: " + task.getEmployee().getEmail()));
-        document.add(new com.itextpdf.text.Paragraph("Employee Name: " + task.getEmployee().getFirstname()));
-        document.add(new com.itextpdf.text.Paragraph("Employee Name: " + task.getEmployee().getLastname()));
-        document.add(new com.itextpdf.text.Paragraph("Task Title: " + task.getTitle()));
-        document.add(new com.itextpdf.text.Paragraph("Duration in Hours: " + task.getDurationInHours()));
-        document.add(new com.itextpdf.text.Paragraph("--------------------------------------------"));
+        Paragraph title = new Paragraph("Employee Report", titleFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
+        document.add(Chunk.NEWLINE);
 
+        document.add(createSection("Project Title", task.getProject().getTitle(), normalFont));
+        document.add(createSection("Employee Name", formatEmployeeName(task.getEmployee()), normalFont));
+        document.add(createSection("Task Title", task.getTitle(), normalFont));
+        document.add(createSection("Task length (hours)", String.valueOf(task.getDurationInHours()), normalFont));
+
+        document.add(new Paragraph("--------------------------------------------", normalFont));
+        document.add(Chunk.NEWLINE);
+
+        // Write performance analytics
+        Paragraph performanceHeading = new Paragraph("Performance Analytics", headingFont);
+        document.add(performanceHeading);
+        document.add(Chunk.NEWLINE);
+
+        document.add(createSection("Task Completion Status", isTaskOnTime ? "On Time" : "Delayed", normalFont));
+        document.add(createSection("Completion Time Variance", completionTimeVariance + " hours", normalFont));
+        document.add(createSection("Total Hours Worked", totalHoursWorked + " hours", normalFont));
+        document.add(createSection("Average Performance", String.valueOf(averagePerformance), normalFont));
+        document.add(createSection("Performance Category", performanceMeasure.toString(), normalFont));
+        document.add(createSection("Efficiency", String.valueOf(efficiency), normalFont));
+
+        document.add(new Paragraph("--------------------------------------------", normalFont));
+        document.add(Chunk.NEWLINE);
+
+        // Write leaves data
+        Paragraph leavesHeading = new Paragraph("Leaves Data", headingFont);
+        document.add(leavesHeading);
+        document.add(Chunk.NEWLINE);
+
+        document.add(createSection("Number of Leaves", String.valueOf(calculateNumberOfLeaves(leaves)), normalFont));
+        document.add(createSection("Average Days per Leave", String.valueOf(calculateAverageDaysPerLeave(leaves)), normalFont));
 
         document.close();
+
+        return filePath;
     }
+
+    // Helper method to create a section with a heading and content
+    private Paragraph createSection(String heading, String content, Font font) {
+        Paragraph section = new Paragraph();
+        section.add(new Chunk(heading + ": ", font));
+        section.add(new Chunk(content, FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        section.setAlignment(Element.ALIGN_LEFT);
+        section.setIndentationLeft(20);
+        return section;
+    }
+
 }

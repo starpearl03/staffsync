@@ -1,11 +1,10 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -28,22 +27,25 @@ public class Notification {
             joinColumns = @JoinColumn(name = "notification_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
-    private Set<Employee> recipients = new HashSet<>();
+    private List<Employee> recipients = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(
-            name = "notification_seen_by",
-            joinColumns = @JoinColumn(name = "notification_id")
-    )
-    @MapKeyJoinColumn(name = "employee_id")
-    @Column(name = "seen")
-    private Map<Employee, Boolean> seenBy;
+    @OneToMany(mappedBy = "notification")
+    @JsonManagedReference
+    private List<NotificationSeenBy> seenBy = new ArrayList<>();
 
     public void markAsSeen(Employee employee) {
-        seenBy.put(employee, true);
+        NotificationSeenBy seenByEntry = NotificationSeenBy.builder()
+                .isSeen(Boolean.TRUE)
+                .notification(this)
+                .employee(employee)
+                .build();
+        this.seenBy.add(seenByEntry);
     }
 
     public boolean isSeenBy(Employee employee) {
-        return seenBy != null && seenBy.containsKey(employee) && seenBy.get(employee);
+        return seenBy.stream()
+                .anyMatch(entry -> entry.getEmployee()
+                        .equals(employee) && entry.getIsSeen()
+                );
     }
 }

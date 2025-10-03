@@ -1,19 +1,17 @@
 package com.example.demo.services;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Employee;
-import com.example.demo.model.Leave;
-import com.example.demo.model.Notification;
-import com.example.demo.model.Task;
+import com.example.demo.model.*;
 import com.example.demo.repository.LeaveRepository;
+import com.example.demo.repository.NotificationSeenByRepository;
 import com.example.demo.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +19,13 @@ public class LeaveService {
     private final LeaveRepository leaveRepository;
     private final TaskRepository taskRepository;
     private final NotificationService notificationService;
+    private final EmployeeService employeeService;
+    private final NotificationSeenByRepository notificationSeenByRepository;
 
     @Transactional
     public Leave create(Leave leave){
+        Employee employee = this.employeeService.findById(leave.getEmployee().getId());
+        leave.setEmployee(employee);
         return this.leaveRepository.save(leave);
     }
 
@@ -78,7 +80,10 @@ public class LeaveService {
     @Transactional
     protected void handleAcceptedLeave(Leave leave) {
         // Fetch all tasks assigned to the employee of the leave
-        Task task = taskRepository.findByEmployeeId(leave.getEmployee().getId());
+        Task task = taskRepository.findByEmployeeId(leave.getEmployee().getId())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Could not retrieve task")
+                );
 
         task.setStatus("pending");
 
@@ -90,7 +95,7 @@ public class LeaveService {
     private void notifyEmployeesOnSameProject(Leave leave, Task task) {
         // Retrieve all tasks assigned to employees on the same project as the leave-taking employee
         List<Task> tasks = taskRepository.findByProjectIdAndEmployeeIdNot(task.getProject().getId(), leave.getEmployee().getId());
-
+        List<NotificationSeenBy> notificationSeenByList = new ArrayList<>();
         // Collect employees from these tasks
         List<Employee> recipients = tasks.stream()
                 .map(Task::getEmployee)
@@ -100,14 +105,27 @@ public class LeaveService {
         // Create a notification
         String title = "Leave Accepted";
         String description = "Leave has been accepted for employee: " + leave.getEmployee().getFirstname() + " " + leave.getEmployee().getLastname();
-        Notification notf = Notification.builder().title(title).description(description).build();
+        Notification notf = Notification.builder()
+                .title(title)
+                .description(description)
+                .recipients(recipients)
+                .build();
 
-        Notification notification = notificationService.createNotification(notf);
+        for(Employee recipient : recipients){
+            notificationSeenByList.add(
+                    NotificationSeenBy.builder()
+                            .isSeen(Boolean.FALSE)
+                            .employee(recipient)
+                            .notification(notf)
+                            .build()
+            );
+
+        }
 
         // Send the notification
         // Save and send the notification
-        notificationService.createNotification(notification);
-        notificationService.sendNotification(notification);
+        notificationService.createNotification(notf, notificationSeenByList);
+        notificationService.sendNotification(notf);
     }
 
     // Method to get number of leaves taken by the employee

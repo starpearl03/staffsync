@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 	private final EmployeeService employeeService;
 	
 	//get all data
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/employees")
+	@GetMapping("/")
 	public List <Employee> getAllEmployees(){
 
 		return this.employeeService.fetchAll();
@@ -35,7 +35,7 @@ public class EmployeeController {
 	
 	//create 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@PostMapping("/employees")
+	@PostMapping("/")
 	public Employee createEmployee(@RequestBody Employee employee) {
 		System.out.println(employee.getFirstname());
 		return employeeService.create(employee);
@@ -44,7 +44,7 @@ public class EmployeeController {
 	
 	// get data by id 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/employees/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Employee> getByID(@PathVariable Long id) {
 		return ResponseEntity.ok(this.employeeService.findById(id));
 	}
@@ -52,14 +52,14 @@ public class EmployeeController {
 	
 	//update data 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@PutMapping ("/employees/{id}")
+	@PutMapping ("/{id}")
 	public ResponseEntity<Employee> updateEmployeeByID(@PathVariable Long id, @RequestBody Employee employeeDetails){
 		return ResponseEntity.ok(this.employeeService.updateById(id, employeeDetails));
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@DeleteMapping("/employees/{id}")
-	public ResponseEntity <Map<String, Boolean> >deleteEmployee(@PathVariable Long id){
+	@DeleteMapping("/{id}")
+	public ResponseEntity <Map<String, Boolean> > deleteEmployee(@PathVariable Long id){
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("Deleted", this.employeeService.delete(id));
 		return ResponseEntity.ok(response);

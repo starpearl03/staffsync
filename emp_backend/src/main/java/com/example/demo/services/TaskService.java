@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Employee;
+import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +14,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final ProjectService projectService;
+    private final EmployeeService employeeService;
 
     public Task create(Task task){
-        validateProjectExists(task.getProject().getId()); // Validate project existence
+        Employee employee = this.employeeService.findById(task.getEmployee().getId());
+        Project project = this.projectService.findById(task.getProject().getId());
+        task.setEmployee(employee);
+        task.setProject(project);
         return this.taskRepository.save(task);
     }
 

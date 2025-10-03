@@ -17,8 +17,8 @@ public class Leave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String description;
-    @OneToOne
-    @JoinColumn(name = "employee_id")
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
     private LocalDate startDate;
     private LocalDate endDate;

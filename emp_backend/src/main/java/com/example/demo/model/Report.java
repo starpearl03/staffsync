@@ -21,6 +21,10 @@ public class Report {
 
     private long totalHoursWorked;
     private double averagePerformance;
+    private Task.PerformanceMeasure performanceMeasure;
+    private long completionTimeVariance;
+    private double efficiency;
     private int numberOfLeaves;
     private double averageDaysPerLeave;
+    private Integer taskLengthInHours;
 }
