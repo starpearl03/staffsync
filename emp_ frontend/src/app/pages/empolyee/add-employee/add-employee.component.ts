@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Employee } from '../employee';
+import { Employee } from '../../../models/employee';
 import { Observable } from 'rxjs';
-import { EmployeeService } from '../employee.service';
+import { EmployeeService } from '../../../services/employee.service';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 
