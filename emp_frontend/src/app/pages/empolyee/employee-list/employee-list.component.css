@@ -1,0 +1,66 @@
+/* Custom Styles for Modern Table */
+.table-container {
+  margin-bottom: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Make the table container full width */
+}
+
+.table-container .table {
+  margin-bottom: 0;
+  border: 1px solid #ddd;
+}
+
+.table-container .table thead th {
+  background-color: #343a40;
+  color: #fff;
+  font-weight: 600;
+}
+
+.table-container .table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.table-container .table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-container .table tbody td {
+  vertical-align: middle;
+}
+
+.table-container .table tbody td .btn {
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.table-container .table tbody td .btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.table-container .table tbody td .btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.table-container .table tbody td .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.table-container .table tbody td .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.table-container .table tbody td .btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.table-container .table tbody td .btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}

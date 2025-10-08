@@ -1,0 +1,55 @@
+/* Ensure that the body and html take up the full viewport height */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for the signin layout */
+.az-signin-wrapper {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Styling for the left column (login form) */
+.az-card-signin {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  border-radius: 8px; /* Optional rounded corners */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styling for the right column (explanatory content) */
+.az-column-signin {
+  flex: 2; /* Adjust this value as needed */
+  background-color: #f7f7f7; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Optional styling for the content inside the right column */
+.az-signin-content h1, .az-signin-content h5, .az-signin-content p {
+  margin: 0;
+  padding: 0 0 10px 0;
+  text-align: center;
+}
+
+/* Adjust button styling */
+.btn-outline-indigo {
+  border-color: #4b49ac;
+  color: #4b49ac;
+}
+
+.btn-outline-indigo:hover {
+  background-color: #4b49ac;
+  color: #fff;
+}

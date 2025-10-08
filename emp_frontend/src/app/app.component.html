@@ -1,0 +1,7 @@
+<app-side-nav *ngIf="!isAuthPage"></app-side-nav>
+<div class="az-content az-content-dashboard">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-footer *ngIf="!isAuthPage"></app-footer>

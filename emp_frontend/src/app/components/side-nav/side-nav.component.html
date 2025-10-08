@@ -1,0 +1,54 @@
+<!-- navbar.component.html -->
+
+<div class="az-header">
+  <div class="container">
+    <div class="az-header-left">
+      <a routerLink="/" class="az-logo"><span></span> e.m.p</a>
+      <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
+    </div><!-- az-header-left -->
+    <div class="az-header-menu">
+      <div class="az-header-menu-header">
+        <a routerLink="/" class="az-logo"><span></span> emp</a>
+        <a href="" class="close">&times;</a>
+      </div><!-- az-header-menu-header -->
+      <ul class="nav">
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/home" class="nav-link"><i class="typcn typcn-home-outline"></i> Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/fetch-all-employee" class="nav-link"><i class="typcn typcn-user-outline"></i> Employees</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/projects" class="nav-link"><i class="typcn typcn-folder"></i> Projects</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/notifications" class="nav-link"><i class="typcn typcn-bell"></i> Notifications</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/tasks" class="nav-link"><i class="typcn typcn-tick"></i> Tasks</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/leaves" class="nav-link"><i class="typcn typcn-calendar"></i> Leaves</a>
+        </li>
+
+      </ul>
+    </div><!-- az-header-menu -->
+
+    <div class="az-header-right">
+      <a href="#" class="az-header-search-link"><i class="fas fa-search"></i></a>
+
+      <div class="az-header-message">
+        <a href="#"><i class="typcn typcn-messages"></i></a>
+      </div><!-- az-header-message -->
+
+      <app-notification></app-notification>
+
+      <app-profile></app-profile>
+    </div>
+  </div><!-- container -->
+</div><!-- az-header -->

@@ -1,0 +1,93 @@
+/* Ensure the content fits the full height of the page */
+.az-content {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif; /* Modern, clean font */
+}
+
+.az-content-breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.az-content-label {
+  font-size: 1.5rem;
+  font-weight: 600; /* Slightly bold for prominence */
+  margin-bottom: 1rem;
+}
+
+.box {
+  background-color: #ffffff;
+  border-radius: 0.375rem; /* Rounded corners for the box */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; /* Ensure some spacing from the content below */
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate; /* Ensure spacing between cells */
+  border-spacing: 0; /* Remove extra space between borders */
+  font-family: 'Roboto', sans-serif; /* Consistent font for table */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9; /* Light grey background for odd rows */
+}
+
+.table-bordered {
+  border: 1px solid #e1e1e1; /* Light grey border for the table */
+}
+
+.table-dark {
+  background-color: #343a40; /* Dark background for header */
+  color: #ffffff; /* White text color */
+}
+
+.table-dark th {
+  font-size: 1.125rem; /* Slightly larger font size for headers */
+  font-weight: 600; /* Bold headers for emphasis */
+  text-align: left;
+  padding: 0.75rem; /* Add padding for better spacing */
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  padding: 1rem; /* Increase padding for better readability */
+}
+
+.table td {
+  font-size: 1rem; /* Standard font size for table data */
+}
+
+.table-striped tbody tr:hover {
+  background-color: #e9ecef; /* Hover effect for rows */
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #ffffff;
+  border-radius: 0.375rem; /* Match button's border-radius */
+  padding: 0.5rem 1rem; /* Adjust padding for better button appearance */
+  font-size: 0.875rem; /* Font size for buttons */
+  font-weight: 500; /* Semi-bold text for buttons */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Slightly darker on hover */
+}
+
+.mt-4 {
+  margin-top: 1.5rem; /* Spacing above buttons */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .box {
+    padding: 1rem;
+  }
+
+  .table th, .table td {
+    font-size: 0.875rem; /* Smaller font size on smaller screens */
+  }
+}

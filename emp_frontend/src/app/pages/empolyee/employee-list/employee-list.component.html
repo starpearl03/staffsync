@@ -1,0 +1,71 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Employees</label>
+        <nav class="nav flex-column">
+          <a routerLink="/add-employee" class="nav-link">Add Employee</a>
+          <a routerLink="/fetch-all-employee" class="nav-link">View All Employees</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Employees</span>
+        <span>List</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Employee List</h4>
+      <p class="mg-b-20">To enable a hover state on table rows.</p>
+
+      <!-- Search Form -->
+      <form (ngSubmit)="goToEmployee()" class="row g-3 mb-4">
+        <div class="form-group col-md-6">
+          <input [(ngModel)]="enteredID" type="text" class="form-control" id="id" name="id" placeholder="Search by ID" />
+        </div>
+        <div class="form-group col-md-6">
+          <button class="btn btn-secondary full-width-button" type="submit">Search</button>
+        </div>
+      </form>
+
+      <!-- Employee Table -->
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-hover mg-b-0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let employee of employees">
+              <th scope="row">{{employee.id}}</th>
+              <td>{{employee.firstname}}</td>
+              <td>{{employee.lastname}}</td>
+              <td>{{employee.email}}</td>
+              <td>{{employee.department}}</td>
+              <td>{{employee.designation}}</td>
+              <td>
+                <button (click)="updateEmployee(employee.id)" class="btn btn-secondary btn-sm">Update</button>
+                <button (click)="deleteEmployee(employee.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
+                <button (click)="detailsOfEmployee(employee.id)" class="btn btn-success btn-sm ms-2">View</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- table-responsive -->
+      </div><!-- table-container -->
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->
