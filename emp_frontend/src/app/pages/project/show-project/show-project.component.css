@@ -1,0 +1,28 @@
+/* Card Styling */
+.project-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title, .card-text {
+  margin: 0;
+}
+
+.card-icon {
+  font-size: 24px;
+  color: #6c757d; /* Light dark color */
+  transition: color 0.3s ease;
+}
+
+.card-icon:hover {
+  color: #343a40; /* Darker color on hover */
+}

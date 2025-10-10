@@ -1,0 +1,54 @@
+/* Leave Details Container */
+.leave-details-container {
+  padding: 20px;
+}
+
+/* Leave Details Card */
+.leave-details-card {
+  background-color: #ffffff; /* Light background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Increased width */
+  margin: 0 auto; /* Center the card */
+}
+
+/* Leave Details Header */
+.leave-details-header h4 {
+  font-size: 24px; /* Font size for header */
+  margin-bottom: 20px; /* Spacing below the header */
+}
+
+.leave-details-header i {
+  color: #343a40; /* Dark color for header icon */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+/* Leave Details Content */
+.leave-details-content {
+  display: flex;
+  flex-wrap: wrap; /* Allows content to wrap within the card */
+  gap: 20px; /* Space between items */
+}
+
+/* Leave Detail Item */
+.leave-detail-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Dim background color for each item */
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 550px; /* Ensures items don’t get too wide */
+}
+
+.leave-detail-item i {
+  color: #343a40; /* Dark color for icons */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+.leave-detail-item p {
+  margin: 0;
+  font-size: 16px; /* Smaller font size */
+  color: #495057; /* Dark color for text */
+}

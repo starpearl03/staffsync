@@ -1,0 +1,40 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Projects</label>
+        <nav class="nav flex-column">
+          <a routerLink="/add-project" class="nav-link">Add Project</a>
+          <a routerLink="/projects" class="nav-link">View All Projects</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Projects</span>
+        <span>Details</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Project Details</h4>
+
+      <!-- Project Details -->
+      <div class="card project-card">
+        <div class="card-body">
+          <div class="card-label">
+            <i class="typcn typcn-clipboard"></i> Title
+          </div>
+          <h5 class="card-title">{{ project.title }}</h5>
+
+          <div class="card-label">
+            <i class="typcn typcn-document-text"></i> Description
+          </div>
+          <p class="card-text">{{ project.description }}</p>
+        </div>
+      </div>
+
+
+
+    </div><!-- az-content-body -->
+  </div><!-- container -->
+</div><!-- az-content -->

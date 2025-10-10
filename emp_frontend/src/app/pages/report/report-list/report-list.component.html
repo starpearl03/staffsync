@@ -1,0 +1,68 @@
+<!-- src/app/pages/report/report-list/report-list.component.html -->
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Reports</label>
+        <nav class="nav flex-column">
+          <a routerLink="/reports" class="nav-link">View All Reports</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Reports</span>
+        <span>View All Reports</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">All Reports</h4>
+      <p class="mg-b-20">List of all generated reports.</p>
+
+      <!-- Generate Report -->
+      <form (ngSubmit)="generateReport()" class="row g-3 mb-4">
+        <div class="form-group col-md-6">
+          <input [(ngModel)]="empolyeeEmail" type="text" class="form-control" id="title" name="title" placeholder="Enter email" />
+        </div>
+        <div class="form-group col-md-6">
+          <button class="btn btn-secondary full-width-button" type="submit">Generate</button>
+        </div>
+      </form>
+
+      <!-- Report Table -->
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-hover mg-b-0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Generated Date</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let report of reports">
+              <th scope="row">{{ report.id }}</th>
+              <td>{{ report.employee?.firstname }} {{ report.employee?.lastname }}</td>
+              <td>{{ report.generatedDate }}</td>
+              <td>
+                <button (click)="viewReportDetails(report.id)" class="btn btn-info btn-sm">View Details</button>
+                <button (click)="downloadReport(report.id, 'pdf')" class="btn btn-primary btn-sm ms-2">Download PDF</button>
+                <button (click)="downloadReport(report.id, 'csv')" class="btn btn-success btn-sm ms-2">Download CSV</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- table-responsive -->
+      </div><!-- table-container -->
+
+
+
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

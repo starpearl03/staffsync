@@ -1,0 +1,93 @@
+/* Notifications Container */
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between notifications */
+  max-width: 1000px; /* Adjust to your desired width */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Notification Bubble */
+.notification-bubble {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.notification-bubble:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.notification-description {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+/* Button Styling */
+.btn {
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}

@@ -26,7 +26,6 @@ public class EmployeeController {
 	private final EmployeeService employeeService;
 	
 	//get all data
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/")
 	public List <Employee> getAllEmployees(){
 
@@ -34,7 +33,6 @@ public class EmployeeController {
 	}
 	
 	//create 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/")
 	public Employee createEmployee(@RequestBody Employee employee) {
 		System.out.println(employee.getFirstname());
@@ -43,7 +41,6 @@ public class EmployeeController {
 	
 	
 	// get data by id 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> getByID(@PathVariable Long id) {
 		return ResponseEntity.ok(this.employeeService.findById(id));
@@ -51,13 +48,11 @@ public class EmployeeController {
 	
 	
 	//update data 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping ("/{id}")
 	public ResponseEntity<Employee> updateEmployeeByID(@PathVariable Long id, @RequestBody Employee employeeDetails){
 		return ResponseEntity.ok(this.employeeService.updateById(id, employeeDetails));
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity <Map<String, Boolean> > deleteEmployee(@PathVariable Long id){
 		Map<String, Boolean> response = new HashMap<>();

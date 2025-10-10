@@ -1,0 +1,69 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <!-- Side Navigation -->
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Tasks</label>
+        <nav class="nav flex-column">
+          <a routerLink="/add-task" class="nav-link">Create Task</a>
+          <a routerLink="/tasks" class="nav-link">View All Tasks</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <!-- Content -->
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Tasks</span>
+        <span>List</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Task List</h4>
+      <p class="mg-b-20">Manage your tasks here.</p>
+
+      <!-- Search Form -->
+      <form (ngSubmit)="searchTasks()" class="row g-3 mb-4">
+        <div class="form-group col-md-6">
+          <input [(ngModel)]="searchQuery" type="text" class="form-control" id="search" name="search" placeholder="Search by Title" />
+        </div>
+        <div class="form-group col-md-6">
+          <button class="btn btn-secondary full-width-button" type="submit">Search</button>
+        </div>
+      </form>
+
+      <!-- Task Table -->
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-hover mg-b-0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of tasks">
+              <th scope="row">{{ task.id }}</th>
+              <td>{{ task.title }}</td>
+              <td>{{ task.description }}</td>
+              <td>{{ task.status }}</td>
+              <td>
+                <button (click)="viewTask(task.id)" class="btn btn-success btn-sm">View</button>
+                <button (click)="editTask(task.id)" class="btn btn-secondary btn-sm ms-2">Edit</button>
+                <button (click)="deleteTask(task.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- table-responsive -->
+      </div><!-- table-container -->
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

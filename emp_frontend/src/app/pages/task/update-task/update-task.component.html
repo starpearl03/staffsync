@@ -1,0 +1,101 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <!-- Side Navigation -->
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Tasks</label>
+        <nav class="nav flex-column">
+          <a routerLink="/create-task" class="nav-link">Create Task</a>
+          <a routerLink="/tasks" class="nav-link">View All Tasks</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <!-- Content -->
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Tasks</span>
+        <span>Update Task</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Update Task</h4>
+      <p class="mg-b-20">Update the details of the task.</p>
+
+      <!-- Task Form -->
+      <form (ngSubmit)="updateTask()" #taskForm="ngForm">
+        <div class="form-container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input [(ngModel)]="task.title" type="text" class="form-control" id="title" name="title" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select [(ngModel)]="task.status" class="form-control" id="status" name="status" required>
+                  <option value="pending">Pending</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="assignedDate">Assigned Date</label>
+                <input [(ngModel)]="task.assignedDate" type="date" class="form-control" id="assignedDate" name="assignedDate" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="finishedDate">Finished Date</label>
+                <input [(ngModel)]="task.finishedDate" type="date" class="form-control" id="finishedDate" name="finishedDate" />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="deadlineDate">Deadline Date</label>
+                <input [(ngModel)]="task.deadlineDate" type="date" class="form-control" id="deadlineDate" name="deadlineDate" />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea [(ngModel)]="task.description" class="form-control" id="description" name="description" required></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="duration">Duration (Hours)</label>
+                <input [(ngModel)]="task.durationInHours" type="number" class="form-control" id="duration" name="duration" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="project">Project</label>
+                <select [(ngModel)]="task.project.id" class="form-control" id="project" name="project" required>
+                  <option *ngFor="let project of projects" [value]="project.id">{{ project.title }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="employee">Employee</label>
+                <select [(ngModel)]="task.employee.id" class="form-control" id="employee" name="employee" required>
+                  <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.firstname }} {{ employee.lastname }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary">Update Task</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

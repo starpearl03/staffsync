@@ -1,0 +1,61 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Notifications</label>
+        <nav class="nav flex-column">
+          <a routerLink="/view-notifications" class="nav-link">View All Notifications</a>
+          <!-- Add more navigation links if needed -->
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Notifications</span>
+        <span>View</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Notification Details</h4>
+      <p class="mg-b-20">Details of the selected notification.</p>
+
+      <!-- Notification Details -->
+      <div class="notification-detail card w-100"> <!-- Added w-100 for full width -->
+        <div class="card-body">
+          <div class="notification-header">
+            <h5 class="card-title">
+              <i class="typcn typcn-bell"></i> {{notification.title}}
+            </h5>
+            <p class="notification-id"><strong>ID:</strong> {{notification.id}}</p>
+          </div>
+          <div class="notification-description">
+            <p><strong>Description:</strong> {{notification.description}}</p>
+          </div>
+
+          <div class="notification-section">
+            <h6><i class="typcn typcn-group"></i> Recipients</h6>
+            <ul class="recipients-list">
+              <li *ngFor="let recipient of notification.recipients">
+                {{recipient.firstname}} {{recipient.lastname}}
+              </li>
+            </ul>
+          </div>
+
+          <div class="notification-section">
+            <h6><i class="typcn typcn-eye"></i> Seen By</h6>
+            <ul class="seen-by-list">
+              <li *ngFor="let seen of notification.seenBy">
+                {{seen.employee.firstname}} {{seen.employee.lastname}} -
+                <span [ngClass]="{'text-success': seen.isSeen, 'text-danger': !seen.isSeen}">
+            {{seen.isSeen ? 'Seen' : 'Not Seen'}}
+          </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+  </div><!-- container -->
+</div><!-- az-content -->

@@ -1,0 +1,94 @@
+/* Report Details Container */
+.report-details-container {
+  padding: 20px;
+}
+
+/* Report Details Card */
+.report-details-card {
+  background-color: #ffffff; /* Light background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Increased width */
+  margin: 0 auto; /* Center the card */
+}
+
+/* Report Details Header */
+.report-details-header h4 {
+  font-size: 24px; /* Font size for header */
+  margin-bottom: 20px; /* Spacing below the header */
+}
+
+.report-details-header i {
+  color: #343a40; /* Dark color for header icon */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+/* Report Details Content */
+.report-details-content {
+  display: flex;
+  flex-wrap: wrap; /* Allows content to wrap within the card */
+  gap: 20px; /* Space between items */
+}
+
+/* Report Detail Item */
+.report-detail-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Dim background color for each item */
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 550px; /* Ensures items don’t get too wide */
+}
+
+.report-detail-item i {
+  color: #343a40; /* Dark color for icons */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+.report-detail-item p {
+  margin: 0;
+  font-size: 16px; /* Smaller font size */
+  color: #495057; /* Dark color for text */
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+  margin-top: 20px; /* Space above the button container */
+}
+
+/* Button Styling */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #007bff; /* Light background color */
+  color: #ffffff; /* White text color */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+}
+
+.btn-success {
+  background-color: #28a745; /* Light background color */
+  color: #ffffff; /* White text color */
+}
+
+.btn-success:hover {
+  background-color: #1e7e34; /* Darker background color on hover */
+}
+
+.btn-icon i {
+  margin-right: 8px; /* Space between icon and button text */
+}

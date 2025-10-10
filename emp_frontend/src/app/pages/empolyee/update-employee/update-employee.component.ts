@@ -14,6 +14,8 @@ export class UpdateEmployeeComponent implements OnInit {
   employee: Employee = new Employee();
   loading = false;
   error: string | null = null;
+  alertMessage: string | null = null; // Alert message
+  alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
 
   constructor(
     private employeeService: EmployeeService,
@@ -43,12 +45,16 @@ export class UpdateEmployeeComponent implements OnInit {
       this.loading = true;
       this.employeeService.updateEmployee(this.id, this.employee).subscribe(
         data => {
-          this.goToEmployeeList();
+          // this.goToEmployeeList();
+          this.alertMessage = 'Employee updated .';
+          this.alertType = 'success'; // or 'info'
           this.loading = false;
         },
         error => {
           console.log(error);
           this.error = 'Failed to update employee data';
+          this.alertMessage = 'Failed to update employee data';
+          this.alertType = 'warning';
           this.loading = false;
         }
       );

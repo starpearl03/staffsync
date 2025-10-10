@@ -1,0 +1,65 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Leaves</label>
+        <nav class="nav flex-column">
+          <a routerLink="/add-leave" class="nav-link">Add Leave</a>
+          <a routerLink="/leaves" class="nav-link">View All Leaves</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Leaves</span>
+        <span>View</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">View Leave</h4>
+      <p class="mg-b-20">Details of the leave request.</p>
+
+      <!-- Leave Details -->
+      <div class="leave-details-container">
+        <div class="leave-details-card">
+          <div class="leave-details-header">
+            <h4><i class="typcn typcn-calendar"></i> Leave Details</h4>
+          </div>
+          <div class="leave-details-content">
+            <div class="leave-detail-item">
+              <i class="typcn typcn-id-badge"></i>
+              <p><strong>ID:</strong> {{leave.id}}</p>
+            </div>
+            <div class="leave-detail-item">
+              <i class="typcn typcn-document-text"></i>
+              <p><strong>Description:</strong> {{leave.description}}</p>
+            </div>
+            <div class="leave-detail-item">
+              <i class="typcn typcn-user"></i>
+              <p><strong>Employee:</strong> {{leave.employee?.firstname}} {{leave.employee?.lastname}}</p>
+            </div>
+            <div class="leave-detail-item">
+              <i class="typcn typcn-calendar-outline"></i>
+              <p><strong>Start Date:</strong> {{leave.startDate}}</p>
+            </div>
+            <div class="leave-detail-item">
+              <i class="typcn typcn-calendar-clear"></i>
+              <p><strong>End Date:</strong> {{leave.endDate}}</p>
+            </div>
+            <div class="leave-detail-item">
+              <i class="typcn typcn-tick"></i>
+              <p><strong>Status:</strong> {{leave.status}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

@@ -6,7 +6,7 @@
         <label>Manage Employees</label>
         <nav class="nav flex-column">
           <a routerLink="/add-employee" class="nav-link">Add Employee</a>
-          <a routerLink="/fetch-all-employee" class="nav-link">View All Employees</a>
+          <a routerLink="/employees" class="nav-link">View All Employees</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -20,10 +20,13 @@
       <h4 class="az-content-label mg-b-5">Employee List</h4>
       <p class="mg-b-20">To enable a hover state on table rows.</p>
 
+      <!-- Include the Alert Component -->
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+
       <!-- Search Form -->
       <form (ngSubmit)="goToEmployee()" class="row g-3 mb-4">
         <div class="form-group col-md-6">
-          <input [(ngModel)]="enteredID" type="text" class="form-control" id="id" name="id" placeholder="Search by ID" />
+          <input [(ngModel)]="searchTerm" type="text" class="form-control" id="search" name="search" placeholder="Search by ID or Email" />
         </div>
         <div class="form-group col-md-6">
           <button class="btn btn-secondary full-width-button" type="submit">Search</button>
@@ -54,11 +57,20 @@
               <td>{{employee.department}}</td>
               <td>{{employee.designation}}</td>
               <td>
-                <button (click)="updateEmployee(employee.id)" class="btn btn-secondary btn-sm">Update</button>
-                <button (click)="deleteEmployee(employee.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
-                <button (click)="detailsOfEmployee(employee.id)" class="btn btn-success btn-sm ms-2">View</button>
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                  <button (click)="updateEmployee(employee.id)" class="btn btn-icon">
+                    <span class="typcn typcn-edit"></span>
+                  </button>
+                  <button (click)="deleteEmployee(employee.id)" class="btn btn-icon text-danger">
+                    <span class="typcn typcn-trash"></span>
+                  </button>
+                  <button (click)="detailsOfEmployee(employee.id)" class="btn btn-icon text-success">
+                    <span class="typcn typcn-eye"></span>
+                  </button>
+                </div>
               </td>
-            </tr>
+
             </tbody>
           </table>
         </div><!-- table-responsive -->

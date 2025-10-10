@@ -1,0 +1,52 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Notifications</label>
+        <nav class="nav flex-column">
+          <a routerLink="/view-notifications" class="nav-link">View All Notifications</a>
+          <!-- Add more navigation links if needed -->
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Notifications</span>
+        <span>List</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Notification List</h4>
+      <p class="mg-b-20">Manage and view notifications here.</p>
+
+      <!-- Search Form -->
+      <form (ngSubmit)="searchNotifications()" class="row g-3 mb-4">
+        <div class="form-group col-md-6">
+          <input [(ngModel)]="searchQuery" type="text" class="form-control" id="search" name="search" placeholder="Search by title" />
+        </div>
+        <div class="form-group col-md-6">
+          <button class="btn btn-secondary full-width-button" type="submit">Search</button>
+        </div>
+      </form>
+
+      <!-- Notifications Container -->
+      <div class="notifications-container">
+        <div class="notification-bubble" *ngFor="let notification of notifications">
+          <div class="notification-header">
+            <h5 class="notification-title">{{ notification.title }}</h5>
+            <div class="notification-actions">
+              <button (click)="viewNotificationDetails(notification.id)" class="btn btn-success btn-sm">View</button>
+              <button (click)="markAsRead(notification.id)" class="btn btn-secondary btn-sm ms-2">Mark as Read</button>
+            </div>
+          </div>
+          <p class="notification-description">{{ notification.description }}</p>
+        </div>
+      </div>
+
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

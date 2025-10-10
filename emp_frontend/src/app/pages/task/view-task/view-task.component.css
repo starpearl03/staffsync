@@ -1,0 +1,54 @@
+/* Task Details Container */
+.task-details-container {
+  padding: 20px;
+}
+
+/* Task Details Card */
+.task-details-card {
+  background-color: #ffffff; /* Light background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Increased width */
+  margin: 0 auto; /* Center the card */
+}
+
+/* Task Details Header */
+.task-details-header h4 {
+  font-size: 24px; /* Font size for header */
+  margin-bottom: 20px; /* Spacing below the header */
+}
+
+.task-details-header i {
+  color: #343a40; /* Dark color for header icon */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+/* Task Details Content */
+.task-details-content {
+  display: flex;
+  flex-wrap: wrap; /* Allows content to wrap within the card */
+  gap: 20px; /* Space between items */
+}
+
+/* Task Detail Item */
+.task-detail-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Dim background color for each item */
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 550px; /* Ensures items don’t get too wide */
+}
+
+.task-detail-item i {
+  color: #343a40; /* Dark color for icons */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+.task-detail-item p {
+  margin: 0;
+  font-size: 16px; /* Smaller font size */
+  color: #495057; /* Dark color for text */
+}

@@ -1,0 +1,84 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Reports</label>
+        <nav class="nav flex-column">
+          <a routerLink="/reports" class="nav-link">View All Reports</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Reports</span>
+        <span>Details</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Report Details</h4>
+
+      <!-- Report Details -->
+      <div class="report-details-container">
+        <div class="report-details-card">
+          <div class="report-details-header">
+            <h4><i class="typcn typcn-calendar-outline"></i> Report Details</h4>
+          </div>
+          <div class="report-details-content">
+            <div class="report-detail-item">
+              <i class="typcn typcn-user"></i>
+              <p><strong>Employee:</strong> {{ report?.employee?.firstname }} {{ report?.employee?.lastname }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-clock"></i>
+              <p><strong>Total Hours Worked:</strong> {{ report?.totalHoursWorked }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-chart-bar"></i>
+              <p><strong>Average Performance:</strong> {{ report?.averagePerformance }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-pie-chart"></i>
+              <p><strong>Performance Measure:</strong> {{ report?.performanceMeasure }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-calendar"></i>
+              <p><strong>Completion Time Variance:</strong> {{ report?.completionTimeVariance }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-calendar-add"></i>
+              <p><strong>Efficiency:</strong> {{ report?.efficiency }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-calendar-outline"></i>
+              <p><strong>Number of Leaves:</strong> {{ report?.numberOfLeaves }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-calendar-clear"></i>
+              <p><strong>Average Days Per Leave:</strong> {{ report?.averageDaysPerLeave }}</p>
+            </div>
+            <div class="report-detail-item">
+              <i class="typcn typcn-clock"></i>
+              <p><strong>Task Length In Hours:</strong> {{ report?.taskLengthInHours }}</p>
+            </div>
+          </div>
+          <!-- Download Buttons -->
+          <div class="report-actions">
+            <button (click)="downloadReport('pdf')" class="btn btn-primary">
+              <i class="far  fa-file-pdf"></i>
+              Export to PDF
+            </button>
+            <button (click)="downloadReport('csv')" class="btn btn-success ms-2">
+              <i class="far fa-save"></i>
+              Export to CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

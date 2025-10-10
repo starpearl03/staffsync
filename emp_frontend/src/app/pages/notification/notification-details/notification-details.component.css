@@ -1,0 +1,123 @@
+/* Notification Detail Card */
+.notification-detail {
+  width: 100%; /* Use full width */
+  max-width: none; /* Remove any max-width constraint */
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease; /* Smooth animation */
+}
+
+.card-body {
+  padding: 20px;
+  background-color: #fff;
+  position: relative;
+}
+
+/* Header */
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-title i {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #6c757d;
+}
+
+.notification-id {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Description */
+.notification-description {
+  margin-bottom: 15px;
+}
+
+.notification-description p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Sections */
+.notification-section {
+  margin-top: 15px;
+}
+
+.notification-section h6 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease; /* Smooth animation */
+}
+
+.notification-section h6 i {
+  margin-right: 8px;
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.recipients-list,
+.seen-by-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.recipients-list li,
+.seen-by-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.recipients-list li:last-child,
+.seen-by-list li:last-child {
+  border-bottom: none;
+}
+
+.text-success {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Hover Effects */
+.card-body:hover {
+  background-color: #f5f5f5; /* Subtle grey background */
+}
+
+.notification-section h6:hover {
+  color: #5a5a5a; /* Darker grey color */
+}
+
+/* Smooth Cursor Change */
+.card-body, .notification-section h6 {
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}

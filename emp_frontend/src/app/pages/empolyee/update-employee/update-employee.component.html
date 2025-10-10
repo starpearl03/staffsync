@@ -6,7 +6,7 @@
         <label>Manage Employees</label>
         <nav class="nav flex-column">
           <a routerLink="/add-employee" class="nav-link">Add Employee</a>
-          <a routerLink="/fetch-all-employee" class="nav-link">View All Employees</a>
+          <a routerLink="/employees" class="nav-link">View All Employees</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -19,6 +19,9 @@
       </div>
       <h4 class="az-content-label mg-b-5">Update Employee</h4>
       <br><br>
+
+      <!-- Include the Alert Component -->
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <div class="container-sm">
         <div class="col-md-8 offset-md-2 container-sm">

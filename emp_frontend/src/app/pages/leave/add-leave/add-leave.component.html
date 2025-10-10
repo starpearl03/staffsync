@@ -1,0 +1,75 @@
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>Manage Leaves</label>
+        <nav class="nav flex-column">
+          <a routerLink="/add-leave" class="nav-link">Add Leave</a>
+          <a routerLink="/leaves" class="nav-link">View All Leaves</a>
+        </nav>
+      </div><!-- component-item -->
+    </div><!-- az-content-left -->
+
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Dashboard</span>
+        <span>Leaves</span>
+        <span>Add</span>
+      </div>
+      <h4 class="az-content-label mg-b-5">Add Leave</h4>
+      <p class="mg-b-20">Fill in the details to add a new leave request.</p>
+
+      <!-- Add Leave Form -->
+      <form (ngSubmit)="onSubmit()" #leaveForm="ngForm">
+        <div class="form-container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input [(ngModel)]="leave.description" type="text" class="form-control" id="description" name="description" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="employee">Employee</label>
+                <select [(ngModel)]="leave.employee" class="form-control" id="employee" name="employee" required>
+                  <option *ngFor="let emp of employees" [ngValue]="emp">{{ emp.firstname }} {{ emp.lastname }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input [(ngModel)]="leave.startDate" type="date" class="form-control" id="startDate" name="startDate" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input [(ngModel)]="leave.endDate" type="date" class="form-control" id="endDate" name="endDate" required />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select [(ngModel)]="leave.status" class="form-control" id="status" name="status" required>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary">Add Leave</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+      <div class="ht-40"></div>
+    </div><!-- az-content-body -->
+
+  </div><!-- container -->
+</div><!-- az-content -->

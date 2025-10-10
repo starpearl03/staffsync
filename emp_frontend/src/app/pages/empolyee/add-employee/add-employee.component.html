@@ -6,7 +6,7 @@
         <label>Manage Employees</label>
         <nav class="nav flex-column">
           <a routerLink="/add-employee" class="nav-link">Add Employee</a>
-          <a routerLink="/fetch-all-employee" class="nav-link">View All Employees</a>
+          <a routerLink="/employees" class="nav-link">View All Employees</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -15,15 +15,17 @@
       <div class="az-content-breadcrumb">
         <span>Dashboard</span>
         <span>Employees</span>
-        <span>Update</span>
+        <span>Add</span>
       </div>
-      <h4 class="az-content-label mg-b-5">Update Employee</h4>
+      <h4 class="az-content-label mg-b-5">Add Employee</h4>
       <br><br>
+
+      <!-- Include the Alert Component -->
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <div class="container-sm">
         <div class="col-md-8 offset-md-2 container-sm">
-          <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" class="row g-3 form-container container-sm">
-
+          <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="row g-3 form-container container-sm">
             <!-- Existing Form Fields -->
             <div class="form-group col-md-6">
               <label><b>First Name</b></label>
@@ -106,6 +108,33 @@
               </div>
             </div>
 
+            <!-- Divider and Login Credentials Heading -->
+            <div class="form-group col-md-12">
+              <hr />
+              <h4>Login Credentials</h4>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label><b>Password</b></label>
+              <input type="password" class="form-control" id="password" [(ngModel)]="employee.password" name="password"
+                     required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
+              <div *ngIf="f.submitted && password.errors" class="invalid-feedback">
+                <div *ngIf="password.errors['required']">Password is required</div>
+                <div *ngIf="password.errors['minlength']">Password minimum 6 characters are required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label><b>Confirm Password</b></label>
+              <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="employee.confirmPassword"
+                     name="confirmPassword" required #confirmPassword="ngModel"
+                     [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors }" />
+              <div *ngIf="f.submitted && confirmPassword.errors" class="invalid-feedback">
+                <div *ngIf="confirmPassword.errors['required']">Confirm Password is required</div>
+                <div *ngIf="confirmPassword.errors['validateEqual']">Passwords must match</div>
+              </div>
+            </div>
+
             <!-- Submit and Cancel Buttons -->
             <div class="form-group col-md-6">
               <button class="btn btn-success full-width-button" type="submit" id="reg" [disabled]="!f.form.valid">Submit</button>
@@ -114,7 +143,9 @@
             <div class="col-md-6">
               <button type="button" (click)="goToEmployeeList()" class="btn btn-danger full-width-button">Cancel</button>
             </div>
+
           </form>
+
         </div>
       </div>
     </div>
