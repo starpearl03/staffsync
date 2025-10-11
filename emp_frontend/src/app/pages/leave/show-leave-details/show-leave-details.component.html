@@ -1,12 +1,11 @@
 <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
   <div class="container">
-
     <div class="az-content-left az-content-left-components">
       <div class="component-item">
         <label>Manage Leaves</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-leave" class="nav-link">Add Leave</a>
-          <a routerLink="/leaves" class="nav-link">View All Leaves</a>
+          <a routerLink="/add-leave" routerLinkActive="active-link" class="nav-link">Add Leave</a>
+          <a routerLink="/leaves" routerLinkActive="active-link" class="nav-link">View All Leaves</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -15,10 +14,10 @@
       <div class="az-content-breadcrumb">
         <span>Dashboard</span>
         <span>Leaves</span>
-        <span>View</span>
+        <span>Details</span>
       </div>
-      <h4 class="az-content-label mg-b-5">View Leave</h4>
-      <p class="mg-b-20">Details of the leave request.</p>
+      <h4 class="az-content-label mg-b-5">Leave Details</h4>
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <!-- Leave Details -->
       <div class="leave-details-container">
@@ -28,38 +27,37 @@
           </div>
           <div class="leave-details-content">
             <div class="leave-detail-item">
-              <i class="typcn typcn-id-badge"></i>
-              <p><strong>ID:</strong> {{leave.id}}</p>
+              <i class="typcn typcn-tag"></i>
+              <p><strong>Leave ID:</strong> {{ leave.id }}</p>
             </div>
             <div class="leave-detail-item">
               <i class="typcn typcn-document-text"></i>
-              <p><strong>Description:</strong> {{leave.description}}</p>
+              <p><strong>Description:</strong> {{ leave.description }}</p>
             </div>
             <div class="leave-detail-item">
               <i class="typcn typcn-user"></i>
-              <p><strong>Employee:</strong> {{leave.employee?.firstname}} {{leave.employee?.lastname}}</p>
+              <p><strong>Employee:</strong> {{ leave.employee.firstname }} {{ leave.employee.lastname }}</p>
             </div>
             <div class="leave-detail-item">
               <i class="typcn typcn-calendar-outline"></i>
-              <p><strong>Start Date:</strong> {{leave.startDate}}</p>
+              <p><strong>Start Date:</strong> {{ leave.startDate }}</p>
             </div>
             <div class="leave-detail-item">
               <i class="typcn typcn-calendar-clear"></i>
-              <p><strong>End Date:</strong> {{leave.endDate}}</p>
+              <p><strong>End Date:</strong> {{ leave.endDate }}</p>
             </div>
             <div class="leave-detail-item">
               <i class="typcn typcn-tick"></i>
-              <p><strong>Status:</strong> {{leave.status}}</p>
+              <p><strong>Status:</strong> {{ leave.status }}</p>
+            </div>
+            <div class="leave-detail-item">
+              <a routerLink="/leaves" class="btn btn-primary"><i class="typcn typcn-arrow-back"></i> Back to List</a>
             </div>
           </div>
         </div>
       </div>
+      <app-spinner *ngIf="isLoading"></app-spinner>
 
-
-
-
-      <div class="ht-40"></div>
     </div><!-- az-content-body -->
-
   </div><!-- container -->
 </div><!-- az-content -->

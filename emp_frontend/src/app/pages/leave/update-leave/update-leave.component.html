@@ -5,8 +5,8 @@
       <div class="component-item">
         <label>Manage Leaves</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-leave" class="nav-link">Add Leave</a>
-          <a routerLink="/leaves" class="nav-link">View All Leaves</a>
+          <a routerLink="/add-leave" routerLinkActive="active-link" class="nav-link">Add Leave</a>
+          <a routerLink="/leaves" routerLinkActive="active-link" class="nav-link">View All Leaves</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -19,6 +19,7 @@
       </div>
       <h4 class="az-content-label mg-b-5">Update Leave</h4>
       <p class="mg-b-20">Update the leave request details.</p>
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <!-- Update Leave Form -->
       <form (ngSubmit)="onSubmit()" #leaveForm="ngForm">
@@ -67,9 +68,9 @@
         </div>
       </form>
 
-
       <div class="ht-40"></div>
     </div><!-- az-content-body -->
+    <app-spinner *ngIf="isLoading"></app-spinner>
 
   </div><!-- container -->
 </div><!-- az-content -->

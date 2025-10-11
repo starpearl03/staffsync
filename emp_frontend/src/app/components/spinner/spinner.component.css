@@ -1,0 +1,62 @@
+/*.spinner-overlay {*/
+/*  position: fixed;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background-color: rgba(0, 0, 0, 0.5); !* Semi-transparent background *!*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  z-index: 1050; !* Ensure spinner is on top of other content *!*/
+/*}*/
+
+/*.spinner-border {*/
+/*  width: 3rem;*/
+/*  height: 3rem;*/
+/*  border-width: 0.25rem;*/
+/*}*/
+
+/*.spinner-border-sm {*/
+/*  width: 2rem;*/
+/*  height: 2rem;*/
+/*  border-width: 0.2rem;*/
+/*}*/
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Adjust the transparency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Ensure spinner is on top of other content */
+  pointer-events: none; /* Allow clicks to pass through */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.25rem;
+  border-color: #3498db transparent #3498db transparent; /* Custom border colors */
+  animation: spin 1.2s linear infinite; /* Rotate animation */
+}
+
+.spinner-border-sm {
+  width: 2rem;
+  height: 2rem;
+  border-width: 0.2rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Starting rotation */
+  }
+  100% {
+    transform: rotate(360deg); /* Full rotation */
+  }
+}
+
+

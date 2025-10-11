@@ -12,47 +12,31 @@
         <a href="" class="close">&times;</a>
       </div><!-- az-header-menu-header -->
       <ul class="nav">
-        <ul class="nav">
-
-          <li class="nav-item">
-            <a routerLink="/employees" class="nav-link"><i class="typcn typcn-user-outline"></i> Employees</a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/projects" class="nav-link"><i class="typcn typcn-folder"></i> Projects</a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/view-notifications" class="nav-link"><i class="typcn typcn-bell"></i> Notifications</a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/tasks" class="nav-link"><i class="typcn typcn-tick"></i> Tasks</a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/leaves" class="nav-link"><i class="typcn typcn-calendar-outline"></i> Leaves</a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/reports" class="nav-link"><i class="typcn typcn-document-text"></i> Reports</a>
-          </li>
-        </ul>
-
-
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/employees" class="nav-link"><i class="typcn typcn-user-outline"></i> Employees</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/projects" class="nav-link"><i class="typcn typcn-folder"></i> Projects</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/view-notifications" class="nav-link"><i class="typcn typcn-bell"></i> Notifications</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/tasks" class="nav-link"><i class="typcn typcn-tick"></i> Tasks</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/leaves" class="nav-link"><i class="typcn typcn-calendar-outline"></i> Leaves</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/reports" class="nav-link"><i class="typcn typcn-document-text"></i> Reports</a>
+        </li>
       </ul>
     </div><!-- az-header-menu -->
 
     <div class="az-header-right">
-      <a href="#" class="az-header-search-link"><i class="fas fa-search"></i></a>
-
-      <div class="az-header-message">
-        <a href="#"><i class="typcn typcn-messages"></i></a>
-      </div><!-- az-header-message -->
-
       <app-notification></app-notification>
-
       <app-profile></app-profile>
     </div>
+
   </div><!-- container -->
 </div><!-- az-header -->

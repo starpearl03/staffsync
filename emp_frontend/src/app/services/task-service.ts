@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task';
 
@@ -7,27 +7,36 @@ import { Task } from '../models/task';
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://yourapi.com/api/tasks'; // Replace with your API endpoint
+  private apiUrl = 'http://localhost:8081/api/v1/task'; // Adjust the base URL to match your backend configuration
 
-  constructor(private http: HttpClient) {}
-
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
-  }
-
-  getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(`${this.apiUrl}/${id}`);
-  }
+  constructor(private http: HttpClient) { }
 
   createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<Task>(`${this.apiUrl}/create`, task, httpOptions);
   }
 
-  updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/`);
   }
 
-  deleteTask(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  getTaskById(id: number): Observable<Task> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Task>(url);
+  }
+
+  updateTask(id: number, task: Task): Observable<Task> {
+    const url = `${this.apiUrl}/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put<Task>(url, task, httpOptions);
+  }
+
+  deleteTask(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
   }
 }

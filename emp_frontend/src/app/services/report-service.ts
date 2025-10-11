@@ -1,43 +1,48 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Employee } from '../models/employee';
 import { Report } from '../models/report';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportService {
-  private apiUrl = 'your-api-endpoint'; // Replace with your API URL
+  private baseUrl = 'http://localhost:8081/api/v1/report'; // Replace with your backend URL
 
   constructor(private http: HttpClient) { }
 
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.apiUrl}/employees`);
+  // Fetch all reports
+  getReports(): Observable<Report[]> {
+    return this.http.get<Report[]>(`${this.baseUrl}/`);
   }
 
-  generateReport(employeeId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/reports/generate`, { employeeId });
+  // Fetch report by ID
+  getReportById(id: number): Observable<Report> {
+    return this.http.get<Report>(`${this.baseUrl}/${id}`);
   }
 
-  downloadReport(id: number, format: 'pdf' | 'csv'): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/reports/${id}/download`, {
-      responseType: 'blob',
-      params: {
-        format
-      }
+  // Generate report for employee
+  generateReport(employeeId: number): Observable<Report> {
+    return this.http.post<Report>(`${this.baseUrl}/generate/${employeeId}`, {});
+  }
+
+// Export report as CSV
+  exportReportAsCsv(employeeId: number): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/exportToCsv/${employeeId}`, {}, {
+      responseType: 'text' as 'json' // Expect plain text response
     });
   }
 
-  getReports(): Observable<Report[]> {
-    return this.http.get<Report[]>(`${this.apiUrl}/reports`);
+// Export report as PDF
+  exportReportAsPdf(employeeId: number): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/exportToPdf/${employeeId}`, {}, {
+      responseType: 'text' as 'json' // Expect plain text response
+    });
   }
 
-  getReportById(id: number): Observable<Report> {
-    return this.http.get<Report>(`${this.apiUrl}/reports/${id}`);
-  }
 
-  getReportDetails(reportId: number) {
-    return this.http.get<Report>(`${this.apiUrl}/reports/${reportId}`);
+  // Delete report by ID
+  deleteReport(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

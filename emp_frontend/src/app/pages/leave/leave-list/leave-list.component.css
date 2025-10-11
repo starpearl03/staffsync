@@ -1,0 +1,73 @@
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem; /* Space between buttons */
+}
+
+/* Button Styling */
+.btn-icon {
+  background-color: #ffffff; /* White background for buttons */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 6px; /* Rounded corners */
+  padding: 8px 12px; /* Adjusted padding */
+  font-size: 14px; /* Font size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.btn-icon:hover {
+  background-color: #e2e6ea; /* Background color on hover */
+  border-color: #adb5bd; /* Border color on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Icon Styling */
+.btn-icon .typcn {
+  font-size: 16px; /* Adjust icon size */
+}
+
+/* Specific Button Colors */
+.btn-icon.text-danger {
+  color: #dc3545; /* Danger color */
+}
+
+.btn-icon.text-success {
+  color: #28a745; /* Success color */
+}
+
+/* Navigation links */
+.nav {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Basic link styles */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+/* Navigation links */
+.nav {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Basic link styles */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease, font-size 0.2s ease; /* Smooth transition for color and font-size */
+  font-size: 1rem; /* Base font size */
+}
+
+/* Hover effect */
+.nav-link:hover {
+  color: #007bff; /* Blue color on hover */
+  font-size: 1.05rem; /* Slightly larger font size on hover */
+}

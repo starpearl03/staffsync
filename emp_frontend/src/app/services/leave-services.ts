@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Leave} from "../models/leave";
+import { Leave } from '../models/leave';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LeaveServices {
-  private apiUrl = 'http://your-backend-api-url/leaves'; // Replace with your actual API URL
+export class LeaveService {
+  private apiUrl = 'http://localhost:8081/api/v1/leave'; // Replace with your backend API URL
 
   constructor(private http: HttpClient) { }
 
-  // Get all leaves
-  getAllLeaves(): Observable<Leave[]> {
-    return this.http.get<Leave[]>(this.apiUrl);
+  // Create Leave
+  createLeave(leave: Leave): Observable<Leave> {
+    return this.http.post<Leave>(`${this.apiUrl}/create`, leave);
   }
 
-  // Get leave by ID
+  // Fetch All Leaves
+  getLeaves(): Observable<Leave[]> {
+    return this.http.get<Leave[]>(`${this.apiUrl}/`);
+  }
+
+  // Fetch Leave by ID
   getLeaveById(id: number): Observable<Leave> {
     return this.http.get<Leave>(`${this.apiUrl}/${id}`);
   }
 
-  // Create a new leave
-  createLeave(leave: Leave): Observable<Leave> {
-    return this.http.post<Leave>(this.apiUrl, leave);
+  // Update Leave
+  updateLeave(id: number, leave: Leave): Observable<Leave> {
+    return this.http.put<Leave>(`${this.apiUrl}/${id}`, leave);
   }
 
-  // Update an existing leave
-  updateLeave(leave: Leave): Observable<Leave> {
-    return this.http.put<Leave>(`${this.apiUrl}/${leave.id}`, leave);
-  }
-
-  // Delete a leave
+  // Delete Leave
   deleteLeave(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

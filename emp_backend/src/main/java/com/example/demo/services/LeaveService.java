@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,7 +61,7 @@ public class LeaveService {
             leaveDb.setStatus(leave.getStatus());
 
             // If leave status is accepted, update related tasks and notify employees
-            if (leave.getStatus().equalsIgnoreCase("accepted") && !oldStatus.equalsIgnoreCase("accepted")) {
+            if (leave.getStatus().equalsIgnoreCase("Approved") && !oldStatus.equalsIgnoreCase("accepted")) {
                 handleAcceptedLeave(leaveDb);
             }
         }
@@ -104,7 +105,15 @@ public class LeaveService {
 
         // Create a notification
         String title = "Leave Accepted";
-        String description = "Leave has been accepted for employee: " + leave.getEmployee().getFirstname() + " " + leave.getEmployee().getLastname();
+        String description = String.format(
+                "Leave has been accepted for employee: %s %s From: %s To: %s",
+                leave.getEmployee().getFirstname(),
+                leave.getEmployee().getLastname(),
+                leave.getStartDate(),
+                leave.getEndDate()
+        );
+
+
         Notification notf = Notification.builder()
                 .title(title)
                 .description(description)
@@ -131,7 +140,10 @@ public class LeaveService {
     // Method to get number of leaves taken by the employee
     public int getNumberOfLeaves(long employeeId) {
         List<Leave> leaves = leaveRepository.findByEmployeeId(employeeId);
-        return leaves.size();
+        List<Leave> approvedLeaves = leaves.stream()
+                .filter(leave -> "Approved".equals(leave.getStatus()))
+                .toList();
+        return approvedLeaves.size();
     }
 
     // Method to calculate average days per leave taken by the employee

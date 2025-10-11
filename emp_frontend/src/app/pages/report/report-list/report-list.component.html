@@ -1,16 +1,17 @@
-<!-- src/app/pages/report/report-list/report-list.component.html -->
 <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
   <div class="container">
 
+    <!-- Navigation -->
     <div class="az-content-left az-content-left-components">
       <div class="component-item">
         <label>Manage Reports</label>
         <nav class="nav flex-column">
-          <a routerLink="/reports" class="nav-link">View All Reports</a>
+          <a routerLink="/reports" routerLinkActive="active-link" class="nav-link">View All Reports</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
 
+    <!-- Main Content -->
     <div class="az-content-body pd-lg-l-40 d-flex flex-column">
       <div class="az-content-breadcrumb">
         <span>Dashboard</span>
@@ -20,15 +21,30 @@
       <h4 class="az-content-label mg-b-5">All Reports</h4>
       <p class="mg-b-20">List of all generated reports.</p>
 
-      <!-- Generate Report -->
+      <!-- Include the Alert Component -->
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+
+      <!-- Generate Report Form -->
       <form (ngSubmit)="generateReport()" class="row g-3 mb-4">
-        <div class="form-group col-md-6">
-          <input [(ngModel)]="empolyeeEmail" type="text" class="form-control" id="title" name="title" placeholder="Enter email" />
-        </div>
-        <div class="form-group col-md-6">
-          <button class="btn btn-secondary full-width-button" type="submit">Generate</button>
+        <div class="col-md-8">
+          <div class="input-group">
+            <select
+              [(ngModel)]="selectedEmployeeId"
+              class="form-control custom-select"
+              id="employeeSelect"
+              name="employeeSelect"
+              required
+            >
+              <option value="" disabled>Select an employee...</option>
+              <option *ngFor="let employee of employees" [value]="employee.id">
+                {{ employee.firstname }} {{ employee.lastname }} ({{ employee.email }})
+              </option>
+            </select>
+            <button class="btn btn-secondary ms-2" type="submit">Generate</button>
+          </div>
         </div>
       </form>
+
 
       <!-- Report Table -->
       <div class="table-container">
@@ -37,29 +53,52 @@
             <thead>
             <tr>
               <th>ID</th>
+              <th>Project</th>
               <th>Employee</th>
-              <th>Generated Date</th>
-              <th>Actions</th>
+              <th>Total Hours Worked</th>
+              <th>Average Performance</th>
+              <th>Performance Measure</th>
+              <th>Efficiency</th>
+              <th>Number of Leaves</th>
+              <th>Average Days per Leave</th>
+              <th>Task Length (Hours)</th>
+              <th>Export<span class="typcn typcn-download"></span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="reports.length; else noReports">
             <tr *ngFor="let report of reports">
               <th scope="row">{{ report.id }}</th>
+              <td>{{ report.project?.title }}</td>
               <td>{{ report.employee?.firstname }} {{ report.employee?.lastname }}</td>
-              <td>{{ report.generatedDate }}</td>
+              <td>{{ report.totalHoursWorked }}</td>
+              <td>{{ report.averagePerformance }}</td>
+              <td>{{ report.performanceMeasure }}</td>
+              <td>{{ report.efficiency }}</td>
+              <td>{{ report.numberOfLeaves }}</td>
+              <td>{{ report.averageDaysPerLeave }}</td>
+              <td>{{ report.taskLengthInHours !== null ? report.taskLengthInHours : 'N/A' }}</td>
               <td>
-                <button (click)="viewReportDetails(report.id)" class="btn btn-info btn-sm">View Details</button>
-                <button (click)="downloadReport(report.id, 'pdf')" class="btn btn-primary btn-sm ms-2">Download PDF</button>
-                <button (click)="downloadReport(report.id, 'csv')" class="btn btn-success btn-sm ms-2">Download CSV</button>
+                <app-spinner *ngIf="isLoading"></app-spinner>
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                  <button (click)="downloadReport(report.employee?.id || 0, 'pdf')" class="btn btn-icon text-primary">
+                     PDF
+                  </button>
+                  <button (click)="downloadReport(report.employee?.id || 0, 'csv')" class="btn btn-icon text-success">
+                     CSV
+                  </button>
+                </div>
               </td>
             </tr>
             </tbody>
+            <ng-template #noReports>
+              <tr>
+                <td colspan="12" class="text-center">No reports available</td>
+              </tr>
+            </ng-template>
           </table>
         </div><!-- table-responsive -->
       </div><!-- table-container -->
-
-
-
 
       <div class="ht-40"></div>
     </div><!-- az-content-body -->

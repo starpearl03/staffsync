@@ -18,6 +18,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     // Create
+    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @PostMapping("/create")
     public ResponseEntity<Project> create(@RequestBody Project project){
         return ResponseEntity.ok()
@@ -27,6 +28,7 @@ public class ProjectController {
     }
 
     // Fetch all
+    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @GetMapping("/")
     public ResponseEntity<List<Project>> fetchAll(){
         return ResponseEntity.ok()
@@ -36,6 +38,7 @@ public class ProjectController {
     }
 
     // Fetch by id
+    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @GetMapping("/{id}")
     public ResponseEntity<Project> fetchById(@PathVariable Long id){
         return ResponseEntity.ok()
@@ -45,6 +48,7 @@ public class ProjectController {
     }
 
     // Fetch by id
+    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @PutMapping("/{id}")
     public ResponseEntity<Project> UpdateById(@RequestBody Project project, @PathVariable Long id){
         return ResponseEntity.ok()
@@ -54,6 +58,7 @@ public class ProjectController {
     }
 
     // Delete by id
+    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @DeleteMapping("/{id}")
     public ResponseEntity <Map<String, Boolean>>  delete(@PathVariable Long id){
         Map<String, Boolean> response = new HashMap<>();

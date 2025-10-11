@@ -39,6 +39,7 @@ import { NotificationDetailsComponent } from './pages/notification/notification-
 import { ReportListComponent } from './pages/report/report-list/report-list.component';
 import { ReportDetailsComponent } from './pages/report/report-details/report-details.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { AlertComponent } from './components/alert/alert.component';
     NotificationDetailsComponent,
     ReportListComponent,
     ReportDetailsComponent,
-    AlertComponent
+    AlertComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

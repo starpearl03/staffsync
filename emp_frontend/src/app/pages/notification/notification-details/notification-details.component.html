@@ -7,8 +7,8 @@
           <a routerLink="/view-notifications" class="nav-link">View All Notifications</a>
           <!-- Add more navigation links if needed -->
         </nav>
-      </div><!-- component-item -->
-    </div><!-- az-content-left -->
+      </div>
+    </div>
 
     <div class="az-content-body pd-lg-l-40 d-flex flex-column">
       <div class="az-content-breadcrumb">
@@ -19,8 +19,7 @@
       <h4 class="az-content-label mg-b-5">Notification Details</h4>
       <p class="mg-b-20">Details of the selected notification.</p>
 
-      <!-- Notification Details -->
-      <div class="notification-detail card w-100"> <!-- Added w-100 for full width -->
+      <div class="notification-detail card w-100">
         <div class="card-body">
           <div class="notification-header">
             <h5 class="card-title">
@@ -47,8 +46,8 @@
               <li *ngFor="let seen of notification.seenBy">
                 {{seen.employee.firstname}} {{seen.employee.lastname}} -
                 <span [ngClass]="{'text-success': seen.isSeen, 'text-danger': !seen.isSeen}">
-            {{seen.isSeen ? 'Seen' : 'Not Seen'}}
-          </span>
+                  {{seen.isSeen ? 'Seen' : 'Not Seen'}}
+                </span>
               </li>
             </ul>
           </div>
@@ -56,6 +55,6 @@
       </div>
 
       <div class="ht-40"></div>
-    </div><!-- az-content-body -->
-  </div><!-- container -->
-</div><!-- az-content -->
+    </div>
+  </div>
+</div>

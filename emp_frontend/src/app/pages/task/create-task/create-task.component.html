@@ -1,16 +1,16 @@
 <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
   <div class="container">
-
     <!-- Side Navigation -->
     <div class="az-content-left az-content-left-components">
       <div class="component-item">
         <label>Manage Tasks</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-task" class="nav-link">Create Task</a>
-          <a routerLink="/tasks" class="nav-link">View All Tasks</a>
+          <a routerLink="/add-task" routerLinkActive="active-link" class="nav-link">Create Task</a>
+          <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">View All Tasks</a>
         </nav>
-      </div><!-- component-item -->
-    </div><!-- az-content-left -->
+      </div>
+    </div>
+    <app-spinner *ngIf="isLoading"></app-spinner>
 
     <!-- Content -->
     <div class="az-content-body pd-lg-l-40 d-flex flex-column">
@@ -21,9 +21,9 @@
       </div>
       <h4 class="az-content-label mg-b-5">Create New Task</h4>
       <p class="mg-b-20">Fill in the details to create a new task.</p>
-
       <!-- Task Form -->
-      <form (ngSubmit)="createTask()" #taskForm="ngForm">
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+      <form (ngSubmit)="saveTask()" #taskForm="ngForm">
         <div class="form-container">
           <div class="row">
             <div class="col-md-6">
@@ -88,9 +88,6 @@
           </div>
         </div>
       </form>
-
-
-    </div><!-- az-content-body -->
-
-  </div><!-- container -->
-</div><!-- az-content -->
+    </div>
+  </div>
+</div>

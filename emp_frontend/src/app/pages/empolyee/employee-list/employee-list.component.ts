@@ -3,6 +3,7 @@ import { Employee } from '../../../models/employee';
 import { EmployeeService } from '../../../services/employee.service';
 import { Router } from '@angular/router';
 import {AlertService} from "../../../services/alert.service";
+import {delay, of} from "rxjs";
 
 @Component({
   selector: 'app-employee-list',
@@ -10,7 +11,8 @@ import {AlertService} from "../../../services/alert.service";
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-
+  //spinner
+  isLoading = false;
   employees: Employee[] = [];
   searchTerm: string = ''; // Unified search term
   dropdownOpen = false; // To control dropdown visibility
@@ -67,12 +69,15 @@ export class EmployeeListComponent implements OnInit {
   }
 
   getEmployees(): void {
+    this.isLoading = true;
     this.employeeService.getEmployeesList().subscribe({
-      next: (data: Employee[]) => this.employees = data,
+      next: (data: Employee[]) => {
+        this.employees = data;
+        this.delay();
+      },
       error: (err) => {
-        console.error('Error fetching employees', err);
-        this.alertMessage = 'Error fetching employees.';
-        this.alertType = 'danger';
+        console.error('Error fetching employees:', err);
+        this.delay();
       }
     });
   }
@@ -84,7 +89,9 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(id: number): void {
+    this.isLoading = true
     if (confirm(`Are you sure you want to delete Employee ID: ${id}?`)) {
+      this.delay();
       this.employeeService.deleteEmployee(id).subscribe({
         next: () => {
           console.log(`Deleted employee ID: ${id}`);
@@ -94,6 +101,7 @@ export class EmployeeListComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error deleting employee', err);
+          this.delay();
           this.alertMessage = 'Error deleting employee.';
           this.alertType = 'danger';
         }
@@ -103,5 +111,15 @@ export class EmployeeListComponent implements OnInit {
 
   detailsOfEmployee(id: number): void {
     this.router.navigate(['details-employee', id]);
+  }
+
+  delay(){
+    // Create an observable that emits a value after a 3-second delay
+    of('Delayed action executed').pipe(
+      delay(1000) // 3000 milliseconds = 3 seconds
+    ).subscribe(message => {
+      console.log(message);
+      this.isLoading = false;
+    });
   }
 }

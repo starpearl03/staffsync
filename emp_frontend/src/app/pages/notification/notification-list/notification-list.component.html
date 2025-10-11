@@ -5,7 +5,7 @@
       <div class="component-item">
         <label>Manage Notifications</label>
         <nav class="nav flex-column">
-          <a routerLink="/view-notifications" class="nav-link">View All Notifications</a>
+          <a routerLink="/view-notifications" routerLinkActive="active-link" class="nav-link">View All Notifications</a>
           <!-- Add more navigation links if needed -->
         </nav>
       </div><!-- component-item -->
@@ -19,16 +19,7 @@
       </div>
       <h4 class="az-content-label mg-b-5">Notification List</h4>
       <p class="mg-b-20">Manage and view notifications here.</p>
-
-      <!-- Search Form -->
-      <form (ngSubmit)="searchNotifications()" class="row g-3 mb-4">
-        <div class="form-group col-md-6">
-          <input [(ngModel)]="searchQuery" type="text" class="form-control" id="search" name="search" placeholder="Search by title" />
-        </div>
-        <div class="form-group col-md-6">
-          <button class="btn btn-secondary full-width-button" type="submit">Search</button>
-        </div>
-      </form>
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <!-- Notifications Container -->
       <div class="notifications-container">
@@ -36,14 +27,23 @@
           <div class="notification-header">
             <h5 class="notification-title">{{ notification.title }}</h5>
             <div class="notification-actions">
-              <button (click)="viewNotificationDetails(notification.id)" class="btn btn-success btn-sm">View</button>
               <button (click)="markAsRead(notification.id)" class="btn btn-secondary btn-sm ms-2">Mark as Read</button>
             </div>
           </div>
-          <p class="notification-description">{{ notification.description }}</p>
+          <p class="notification-description">
+            {{ notification.getFormattedDescription().message }}
+          </p>
+          <p class="notification-dates">
+            <strong>From:</strong> {{ notification.getFormattedDescription().fromDate }}
+            <strong>To:</strong> {{ notification.getFormattedDescription().toDate }}
+          </p>
+          <p class="mb-0 notification-status">
+            <i [ngClass]="notification.isSeen(employeeId) ? 'typcn typcn-tick seen-status' : 'typcn typcn-warning unseen-status'"></i>
+            {{ notification.isSeen(employeeId) ? 'Seen' : 'Unseen' }}
+          </p>
         </div>
       </div>
-
+      <app-spinner *ngIf="isLoading"></app-spinner>
 
       <div class="ht-40"></div>
     </div><!-- az-content-body -->

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Project } from '../models/project';
 
@@ -7,31 +7,37 @@ import { Project } from '../models/project';
   providedIn: 'root'
 })
 export class ProjectService {
-  private baseUrl = 'http://your-api-url.com/projects';  // Replace with your API URL
+  private apiUrl = 'http://localhost:8081/api/v1/project'; // Adjust the base URL to match your backend configuration
 
   constructor(private http: HttpClient) { }
 
+  addProject(project: Project): Observable<Project> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    console.log(`${this.apiUrl}/create`);
+    return this.http.post<Project>(`${this.apiUrl}/create`, project, httpOptions);
+  }
+
   getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.baseUrl);
+    return this.http.get<Project[]>(`${this.apiUrl}/`);
   }
 
   getProjectById(id: number): Observable<Project> {
-    return this.http.get<Project>(`${this.baseUrl}/${id}`);
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Project>(url);
   }
 
-  addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.baseUrl, project);
+  updateProject(id: number, project: Project): Observable<Project> {
+    const url = `${this.apiUrl}/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put<Project>(url, project, httpOptions);
   }
 
-  updateProject(project: Project): Observable<Project> {
-    return this.http.put<Project>(`${this.baseUrl}/${project.id}`, project);
-  }
-
-  deleteProject(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
-  }
-
-  searchProjects(title: string): Observable<Project[]> {
-    return this.http.get<Project[]>(`${this.baseUrl}?title_like=${title}`);
+  deleteProject(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
   }
 }

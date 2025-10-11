@@ -15,9 +15,13 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @OneToOne
+    @JoinColumn(name="employee_id")
+    private Employee employee;
 
     private long totalHoursWorked;
     private double averagePerformance;

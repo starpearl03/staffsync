@@ -5,8 +5,8 @@
       <div class="component-item">
         <label>Manage Employees</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-employee" class="nav-link">Add Employee</a>
-          <a routerLink="/employees" class="nav-link">View All Employees</a>
+          <a routerLink="/add-employee" routerLinkActive="active-link" class="nav-link">Add Employee</a>
+          <a routerLink="/employees" routerLinkActive="active-link" class="nav-link">View All Employees</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -57,6 +57,7 @@
               <td>{{employee.department}}</td>
               <td>{{employee.designation}}</td>
               <td>
+                <app-spinner *ngIf="isLoading"></app-spinner>
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                   <button (click)="updateEmployee(employee.id)" class="btn btn-icon">

@@ -4,8 +4,8 @@
       <div class="component-item">
         <label>Manage Projects</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-project" class="nav-link">Add Project</a>
-          <a routerLink="/projects" class="nav-link">View All Projects</a>
+          <a routerLink="/add-project" routerLinkActive="active-link" class="nav-link">Add Project</a>
+          <a routerLink="/projects" routerLinkActive="active-link" class="nav-link">View All Projects</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -18,11 +18,12 @@
       </div>
       <h4 class="az-content-label mg-b-5">Project List</h4>
       <p class="mg-b-20">To enable a hover state on table rows.</p>
-
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+      <app-spinner *ngIf="isLoading"></app-spinner>
       <!-- Search Form -->
       <form (ngSubmit)="searchProjects()" class="row g-3 mb-4">
         <div class="form-group col-md-6">
-          <input [(ngModel)]="searchTitle" type="text" class="form-control" id="title" name="title" placeholder="Search by Title" />
+          <input [(ngModel)]="searchTitle" type="text" class="form-control" id="title" name="title" placeholder="Search by ID or Title" />
         </div>
         <div class="form-group col-md-6">
           <button class="btn btn-secondary full-width-button" type="submit">Search</button>
@@ -47,9 +48,18 @@
               <td>{{ project.title }}</td>
               <td>{{ project.description }}</td>
               <td>
-                <button (click)="updateProject(project.id)" class="btn btn-secondary btn-sm">Update</button>
-                <button (click)="deleteProject(project.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
-                <button (click)="viewProjectDetails(project.id)" class="btn btn-success btn-sm ms-2">View</button>
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                  <button (click)="updateProject(project.id)" class="btn btn-icon">
+                    <span class="typcn typcn-edit"></span>
+                  </button>
+                  <button (click)="deleteProject(project.id)" class="btn btn-icon text-danger">
+                    <span class="typcn typcn-trash"></span>
+                  </button>
+                  <button (click)="viewProjectDetails(project.id)" class="btn btn-icon text-success">
+                    <span class="typcn typcn-eye"></span>
+                  </button>
+                </div>
               </td>
             </tr>
             </tbody>

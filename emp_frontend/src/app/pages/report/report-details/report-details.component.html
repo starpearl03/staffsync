@@ -1,6 +1,8 @@
+<!-- src/app/pages/report/report-details/report-details.component.html -->
 <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
   <div class="container">
 
+    <!-- Navigation -->
     <div class="az-content-left az-content-left-components">
       <div class="component-item">
         <label>Manage Reports</label>
@@ -10,6 +12,7 @@
       </div><!-- component-item -->
     </div><!-- az-content-left -->
 
+    <!-- Main Content -->
     <div class="az-content-body pd-lg-l-40 d-flex flex-column">
       <div class="az-content-breadcrumb">
         <span>Dashboard</span>
@@ -62,20 +65,19 @@
               <p><strong>Task Length In Hours:</strong> {{ report?.taskLengthInHours }}</p>
             </div>
           </div>
-          <!-- Download Buttons -->
-          <div class="report-actions">
-            <button (click)="downloadReport('pdf')" class="btn btn-primary">
-              <i class="far  fa-file-pdf"></i>
-              Export to PDF
-            </button>
-            <button (click)="downloadReport('csv')" class="btn btn-success ms-2">
-              <i class="far fa-save"></i>
-              Export to CSV
-            </button>
-          </div>
+<!--          &lt;!&ndash; Download Buttons &ndash;&gt;-->
+<!--          <div class="report-actions">-->
+<!--            <button (click)="downloadReport('pdf')" class="btn btn-primary" aria-label="Export to PDF">-->
+<!--              <i class="far fa-file-pdf"></i>-->
+<!--              Export to PDF-->
+<!--            </button>-->
+<!--            <button (click)="downloadReport('csv')" class="btn btn-success ms-2" aria-label="Export to CSV">-->
+<!--              <i class="far fa-save"></i>-->
+<!--              Export to CSV-->
+<!--            </button>-->
+<!--          </div>-->
         </div>
       </div>
-
 
       <div class="ht-40"></div>
     </div><!-- az-content-body -->

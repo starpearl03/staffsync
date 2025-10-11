@@ -1,0 +1,109 @@
+/* Custom styles for the select input and button */
+.custom-select {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.btn-secondary {
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.btn-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem; /* Spacing between buttons */
+}
+
+.btn-icon {
+  background: #f8f9fa; /* Light background */
+  border: 1px solid #dee2e6; /* Dim border */
+  cursor: pointer;
+  font-size: 0.875rem; /* Smaller font size */
+  padding: 0.375rem; /* Adjusted padding to make the button size consistent with smaller text */
+  border-radius: 0.375rem; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.btn-icon:hover {
+  background-color: #e0e0e0; /* Slightly darker background on hover */
+  border-color: #ced4da; /* Slightly darker border on hover */
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+.btn-icon:active {
+  background-color: #d6d8db; /* Darker background on click */
+  border-color: #c6c8ca; /* Darker border on click */
+  box-shadow: none; /* Remove shadow on click */
+}
+
+.btn-icon.text-primary {
+  color: #007bff; /* Primary color for PDF button */
+}
+
+.btn-icon.text-success {
+  color: #28a745; /* Green color for CSV button */
+}
+
+.btn-icon .typcn {
+  vertical-align: middle; /* Align icons vertically centered */
+  margin-right: 0.2rem; /* Space between icon and text */
+}
+
+.btn-icon span {
+  display: flex;
+  align-items: center; /* Align icon and text vertically */
+}
+
+/* Navigation links */
+.nav {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Basic link styles */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+/* Navigation links */
+.nav {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Basic link styles */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease, font-size 0.2s ease; /* Smooth transition for color and font-size */
+  font-size: 1rem; /* Base font size */
+}
+
+/* Hover effect */
+.nav-link:hover {
+  color: #007bff; /* Blue color on hover */
+  font-size: 1.05rem; /* Slightly larger font size on hover */
+}

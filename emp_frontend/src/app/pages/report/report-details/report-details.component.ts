@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Report } from 'src/app/models/report';
-import {ReportService} from "../../../services/report-service";
+import { ReportService } from '../../../services/report-service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -25,19 +25,20 @@ export class ReportDetailsComponent implements OnInit {
     });
   }
 
-  downloadReport(format: 'pdf' | 'csv'): void {
-    const reportId = this.report?.id;
-    if (reportId) {
-      this.reportService.downloadReport(reportId, format).subscribe(response => {
-        // Handle download logic, e.g., saving file
-        const blob = new Blob([response], { type: format === 'pdf' ? 'application/pdf' : 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `report_${reportId}.${format}`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      });
-    }
+  downloadReport(employeeId: number, type: 'pdf' | 'csv'): void {
+    if (!employeeId) return;
+
+    const exportFunction = type === 'pdf' ? this.reportService.exportReportAsPdf : this.reportService.exportReportAsCsv;
+
+    exportFunction.call(this.reportService, employeeId).subscribe(
+      (response: any) => {
+        // Assuming response contains the path of the exported document
+        const path = response.path;
+        alert(`The report has been exported. You can download it from: ${path}`);
+      },
+      error => console.error(`Error exporting report as ${type}:`, error)
+    );
   }
+
+
 }

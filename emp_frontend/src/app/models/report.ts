@@ -1,8 +1,10 @@
 import { Employee } from "./employee";
+import {Project} from "./project";
 
 export class Report {
   id: number;
   employee?: Employee; // Optional reference to Employee model
+  project?: Project;
   generatedDate: string; // ISO 8601 format (e.g., "2024-07-18")
   totalHoursWorked: number;
   averagePerformance: number;
@@ -15,6 +17,7 @@ export class Report {
 
   constructor() {
     this.id = 0;
+    this.project = undefined;
     this.employee = undefined;
     this.generatedDate = "";
     this.totalHoursWorked = 0;

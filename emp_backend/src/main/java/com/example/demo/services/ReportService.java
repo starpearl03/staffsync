@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,17 +35,42 @@ public class ReportService {
         Task task = taskRepository.findByEmployeeId(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not retrieve task"));
 
-        Report report = Report.builder()
-                .project(task.getProject())
-                .totalHoursWorked(task.calculateHoursWorked())
-                .averagePerformance(task.calculatePerformance().ratio())
-                .performanceMeasure(task.calculatePerformance().measure())
-                .completionTimeVariance(task.calculateCompletionTimeVariance())
-                .efficiency(task.calculateEfficiency())
-                .numberOfLeaves(leaveService.getNumberOfLeaves(employeeId))
-                .averageDaysPerLeave(leaveService.getAverageDaysPerLeave(employeeId))
-                .taskLengthInHours(task.getDurationInHours())
-                .build();
+        // Check if a report already exists for the given employee and project
+        Optional<Report> existingReportOpt = reportRepository.findByEmployeeIdAndProjectId(employeeId, task.getProject().getId());
+
+        Report report;
+        if (existingReportOpt.isPresent()) {
+            report = existingReportOpt.get();
+            // Update non-null values
+            if (task.getEmployee() != null) {
+                report.setEmployee(task.getEmployee());
+            }
+            if (task.getProject() != null) {
+                report.setProject(task.getProject());
+            }
+            report.setTotalHoursWorked(task.calculateHoursWorked());
+            report.setAveragePerformance(task.calculatePerformance().ratio());
+            report.setPerformanceMeasure(task.calculatePerformance().measure());
+            report.setCompletionTimeVariance(task.calculateCompletionTimeVariance());
+            report.setEfficiency(task.calculateEfficiency());
+            report.setNumberOfLeaves(leaveService.getNumberOfLeaves(employeeId));
+            report.setAverageDaysPerLeave(leaveService.getAverageDaysPerLeave(employeeId));
+            report.setTaskLengthInHours(task.getDurationInHours());
+        } else {
+            // Create a new report if it doesn't exist
+            report = Report.builder()
+                    .employee(task.getEmployee())
+                    .project(task.getProject())
+                    .totalHoursWorked(task.calculateHoursWorked())
+                    .averagePerformance(task.calculatePerformance().ratio())
+                    .performanceMeasure(task.calculatePerformance().measure())
+                    .completionTimeVariance(task.calculateCompletionTimeVariance())
+                    .efficiency(task.calculateEfficiency())
+                    .numberOfLeaves(leaveService.getNumberOfLeaves(employeeId))
+                    .averageDaysPerLeave(leaveService.getAverageDaysPerLeave(employeeId))
+                    .taskLengthInHours(task.getDurationInHours())
+                    .build();
+        }
 
         return reportRepository.save(report);
     }

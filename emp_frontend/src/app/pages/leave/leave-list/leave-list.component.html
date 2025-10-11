@@ -5,8 +5,8 @@
       <div class="component-item">
         <label>Manage Leaves</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-leave" class="nav-link">Add Leave</a>
-          <a routerLink="/leaves" class="nav-link">View All Leaves</a>
+          <a routerLink="/add-leave" routerLinkActive="active-link" class="nav-link">Add Leave</a>
+          <a routerLink="/leaves" routerLinkActive="active-link" class="nav-link">View All Leaves</a>
         </nav>
       </div><!-- component-item -->
     </div><!-- az-content-left -->
@@ -19,6 +19,8 @@
       </div>
       <h4 class="az-content-label mg-b-5">Leave List</h4>
       <p class="mg-b-20">To enable a hover state on table rows.</p>
+      <app-spinner *ngIf="isLoading"></app-spinner>
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
 
       <!-- Search Form -->
       <form (ngSubmit)="goToLeave()" class="row g-3 mb-4">
@@ -47,16 +49,25 @@
             </thead>
             <tbody>
             <tr *ngFor="let leave of leaves">
-              <th scope="row">{{leave.id}}</th>
-              <td>{{leave.description}}</td>
-              <td>{{leave.employee?.firstname}} {{leave.employee?.lastname}}</td>
-              <td>{{leave.startDate}}</td>
-              <td>{{leave.endDate}}</td>
-              <td>{{leave.status}}</td>
+              <th scope="row">{{ leave.id }}</th>
+              <td>{{ leave.description }}</td>
+              <td>{{ leave.employee.firstname }} {{ leave.employee.lastname }}</td>
+              <td>{{ leave.startDate }}</td>
+              <td>{{ leave.endDate }}</td>
+              <td>{{ leave.status }}</td>
               <td>
-                <button (click)="updateLeave(leave.id)" class="btn btn-secondary btn-sm">Update</button>
-                <button (click)="deleteLeave(leave.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
-                <button (click)="viewLeaveDetails(leave.id)" class="btn btn-success btn-sm ms-2">View</button>
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                  <button (click)="updateLeave(leave.id)" class="btn btn-icon">
+                    <span class="typcn typcn-edit"></span>
+                  </button>
+                  <button (click)="deleteLeave(leave.id)" class="btn btn-icon text-danger">
+                    <span class="typcn typcn-trash"></span>
+                  </button>
+                  <button (click)="viewLeaveDetails(leave.id)" class="btn btn-icon text-success">
+                    <span class="typcn typcn-eye"></span>
+                  </button>
+                </div>
               </td>
             </tr>
             </tbody>
@@ -66,6 +77,5 @@
 
       <div class="ht-40"></div>
     </div><!-- az-content-body -->
-
   </div><!-- container -->
 </div><!-- az-content -->
