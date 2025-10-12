@@ -15,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "employees")
-public class Employee {//extends User
+public class Employee extends User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
