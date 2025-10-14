@@ -33,4 +33,4 @@ build/
 .vscode/
 
 
-emp_frontend/src/assets/img/*
+/emp_frontend/src/assets/img/*
