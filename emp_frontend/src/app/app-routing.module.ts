@@ -22,41 +22,42 @@ import {UpdateLeaveComponent} from "./pages/leave/update-leave/update-leave.comp
 import {ShowLeaveDetailsComponent} from "./pages/leave/show-leave-details/show-leave-details.component";
 import {ReportListComponent} from "./pages/report/report-list/report-list.component";
 import {ReportDetailsComponent} from "./pages/report/report-details/report-details.component";
+import {AuthGuard} from "./pages/authentication/auth.guard";
 
 const routes: Routes = [
 
   // Employee routes
-  {path:"employees",component: EmployeeListComponent},
-  {path:"add-employee", component: AddEmployeeComponent},
-  {path:'update-employee/:id',component:UpdateEmployeeComponent},
-  {path:'details-employee/:id',component:ShowDetailsComponent},
+  {path:"employees",component: EmployeeListComponent, canActivate: [AuthGuard] },
+  {path:"add-employee", component: AddEmployeeComponent, canActivate: [AuthGuard] },
+  {path:'update-employee/:id',component:UpdateEmployeeComponent, canActivate: [AuthGuard] },
+  {path:'details-employee/:id',component:ShowDetailsComponent, canActivate: [AuthGuard] },
 
   // Project routes
-  { path: 'projects', component: ProjectListComponent },
-  { path: 'add-project', component: CreateProjectComponent },
-  { path: 'update-project/:id', component: UpdateProjectComponent },
-  { path: 'project-details/:id', component: ShowProjectComponent },
+  { path: 'projects', component: ProjectListComponent , canActivate: [AuthGuard] },
+  { path: 'add-project', component: CreateProjectComponent , canActivate: [AuthGuard] },
+  { path: 'update-project/:id', component: UpdateProjectComponent , canActivate: [AuthGuard] },
+  { path: 'project-details/:id', component: ShowProjectComponent , canActivate: [AuthGuard] },
 
   // Task routes
-  { path: 'tasks', component: FetchAllTasksComponent },
-  { path: 'add-task', component: CreateTaskComponent },
-  { path: 'update-task/:id', component: UpdateTaskComponent },
-  { path: 'task-details/:id', component: ViewTaskComponent },
+  { path: 'tasks', component: FetchAllTasksComponent , canActivate: [AuthGuard] },
+  { path: 'add-task', component: CreateTaskComponent , canActivate: [AuthGuard] },
+  { path: 'update-task/:id', component: UpdateTaskComponent , canActivate: [AuthGuard] },
+  { path: 'task-details/:id', component: ViewTaskComponent , canActivate: [AuthGuard] },
 
   // Leave routes
-  { path: 'leaves', component: LeaveListComponent },
-  { path: 'leave/:id', component: ShowLeaveDetailsComponent },
-  { path: 'add-leave', component: AddLeaveComponent },
-  { path: 'update-leave/:id', component: UpdateLeaveComponent },
+  { path: 'leaves', component: LeaveListComponent , canActivate: [AuthGuard] },
+  { path: 'leave/:id', component: ShowLeaveDetailsComponent , canActivate: [AuthGuard] },
+  { path: 'add-leave', component: AddLeaveComponent , canActivate: [AuthGuard] },
+  { path: 'update-leave/:id', component: UpdateLeaveComponent , canActivate: [AuthGuard] },
 
   // Report routes
-  { path: 'reports', component: ReportListComponent }, // List of reports
-  { path: 'reports/:id', component: ReportDetailsComponent }, // View report details
-  { path: 'reports/:id/download/:format', component: ReportDetailsComponent }, // Download report (PDF or CSV)
+  { path: 'reports', component: ReportListComponent , canActivate: [AuthGuard] }, // List of reports
+  { path: 'reports/:id', component: ReportDetailsComponent , canActivate: [AuthGuard] }, // View report details
+  { path: 'reports/:id/download/:format', component: ReportDetailsComponent , canActivate: [AuthGuard] }, // Download report (PDF or CSV)
 
   // Notification routes
-  { path: 'view-notifications', component: NotificationListComponent },
-  { path: 'notification/:id', component: NotificationDetailsComponent },
+  { path: 'view-notifications', component: NotificationListComponent , canActivate: [AuthGuard] },
+  { path: 'notification/:id', component: NotificationDetailsComponent , canActivate: [AuthGuard] },
 
   // Authentication Routes
   {path:'', redirectTo: "login", pathMatch:"full"},

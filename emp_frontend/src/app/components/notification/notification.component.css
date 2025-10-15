@@ -1,0 +1,34 @@
+/* notification.component.css */
+
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.dropdown-menu.show {
+  display: block; /* Show when dropdown is active */
+}
+
+.az-header-notification .new {
+  cursor: pointer;
+}
+
+.az-notification-list .media {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.az-notification-list .media .az-img-user {
+  margin-right: 10px;
+  font-size: 1.5em; /* Adjust icon size */
+}
+
+.az-notification-list .media .media-body p {
+  margin: 0;
+}

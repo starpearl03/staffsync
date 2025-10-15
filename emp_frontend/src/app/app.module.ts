@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -40,6 +40,7 @@ import { ReportListComponent } from './pages/report/report-list/report-list.comp
 import { ReportDetailsComponent } from './pages/report/report-details/report-details.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import {AuthInterceptor} from "./pages/authentication/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -88,7 +89,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     NgOptimizedImage,
     CommonModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   exports: [
     SideNavComponent,
     FooterComponent

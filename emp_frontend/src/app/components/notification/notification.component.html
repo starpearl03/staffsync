@@ -1,43 +1,32 @@
 <!-- notification.component.html -->
 
-<div class="dropdown az-header-notification">
-  <a href="#" class="new"><i class="typcn typcn-bell"></i></a>
-  <div class="dropdown-menu">
+<div class="dropdown az-header-notification" (click)="toggleDropdown($event)">
+  <!-- Toggle button -->
+  <a href="#" [ngClass]="{'new': hasUnreadNotifications()}">
+    <i class="typcn typcn-bell"></i> <!-- Notification bell icon -->
+  </a>
+  <!-- Dropdown menu -->
+  <div class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}">
     <div class="az-dropdown-header mg-b-20 d-sm-none">
-      <a href="#" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+      <a href="#" (click)="toggleDropdown($event)" class="az-header-arrow">
+        <i class="icon ion-md-arrow-back"></i>
+      </a>
     </div>
     <h6 class="az-notification-title">Notifications</h6>
-    <p class="az-notification-text">You have 2 unread notifications</p>
+    <p class="az-notification-text">You have {{ notifications.length }} unread notifications</p>
     <div class="az-notification-list">
-      <div class="media new">
-        <div class="az-img-user"><img src="assets/img/faces/face2.jpg" alt=""></div>
+      <div *ngFor="let notification of notifications" class="media">
+        <div class="az-img-user">
+          <i class="fa fa-calendar-check"></i> <!-- Icon representing a day off -->
+        </div>
         <div class="media-body">
-          <p>Congratulate <strong>Socrates Itumay</strong> for work anniversaries</p>
-          <span>Mar 15 12:32pm</span>
+          <p><strong>{{ notification.title }}</strong></p>
+          <span>{{ notification.getFormattedDescription().message }}</span>
+          <span>{{ notification.getFormattedDescription().fromDate }} - {{ notification.getFormattedDescription().toDate }}</span>
         </div><!-- media-body -->
       </div><!-- media -->
-      <div class="media new">
-        <div class="az-img-user online"><img src="assets/img/faces/face3.jpg" alt=""></div>
-        <div class="media-body">
-          <p><strong>Joyce Chua</strong> just created a new blog post</p>
-          <span>Mar 13 04:16am</span>
-        </div><!-- media-body -->
-      </div><!-- media -->
-      <div class="media">
-        <div class="az-img-user"><img src="assets/img/faces/face4.jpg" alt=""></div>
-        <div class="media-body">
-          <p><strong>Althea Cabardo</strong> just created a new blog post</p>
-          <span>Mar 13 02:56am</span>
-        </div><!-- media-body -->
-      </div><!-- media -->
-      <div class="media">
-        <div class="az-img-user"><img src="assets/img/faces/face5.jpg" alt=""></div>
-        <div class="media-body">
-          <p><strong>Adrian Monino</strong> added new comment on your photo</p>
-          <span>Mar 12 10:40pm</span>
-        </div><!-- media-body -->
-      </div><!-- media -->
+      <!-- You can add more notification items here as needed -->
     </div><!-- az-notification-list -->
-    <div class="dropdown-footer"><a href="#">View All Notifications</a></div>
+    <div class="dropdown-footer"><a routerLink="/view-notifications">View All Notifications</a></div>
   </div><!-- dropdown-menu -->
 </div><!-- az-header-notification -->

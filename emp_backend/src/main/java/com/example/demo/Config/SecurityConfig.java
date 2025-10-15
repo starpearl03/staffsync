@@ -24,7 +24,8 @@ import static org.springframework.http.HttpMethod.*;
 public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final LogoutHandler logoutHandler;
+    private final CustomLogoutHandler logoutHandler;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

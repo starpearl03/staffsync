@@ -3,8 +3,9 @@ import { Employee } from '../../../models/employee';  // Adjust the path if nece
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../../../services/employee.service';
 import { Router } from '@angular/router';
-import {AlertService} from "../../../services/alert.service";
-import {delay, of} from "rxjs";
+import { AlertService } from "../../../services/alert.service";
+import { delay, of } from "rxjs";
+import {AuthService} from "../../../services/auth-services.service";
 
 @Component({
   selector: 'app-add-employee',
@@ -13,13 +14,14 @@ import {delay, of} from "rxjs";
 })
 export class AddEmployeeComponent implements OnInit {
   employee: Employee = new Employee();
-  alertMessage: string | null = null; // Alert message
-  alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
+  alertMessage: string | null = null;
+  alertType: 'info' | 'success' | 'warning' | 'danger' = 'info';
   isLoading = false;
 
   constructor(
     private employeeService: EmployeeService,
-    private alertService: AlertService,// Inject the Alert Service
+    private alertService: AlertService,
+    private authService: AuthService, // Inject AuthService
     private router: Router
   ) {}
 
@@ -29,22 +31,43 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   saveEmployee(form: NgForm) {
+    if (this.employee.password !== this.employee.confirmPassword) {
+      this.alertMessage = 'Passwords must match!';
+      this.alertType = 'warning';
+      this.isLoading = false;
+      return;
+    }
+
     this.isLoading = true;
-    this.employeeService.addEmployee(this.employee).subscribe(
-      data => {
-        console.log(data);
-        this.delay();
-        this.alertMessage = 'Employee added successfully!';
-        this.alertType = 'success'; // Set alert type
-        this.alertService.setAlert('Employee added successfully!', 'success'); // Set alert message
-        this.clearForm(form);
-        this.goToEmployeeList();
+    this.employee.role = 'EMPLOYEE'; // Ensure role is set
+
+    // First register the user
+    this.authService.register(this.employee.email, this.employee.password, this.employee.role).subscribe(
+      () => {
+        // On successful registration, add the employee
+        this.employeeService.addEmployee(this.employee).subscribe(
+          data => {
+            console.log(data);
+            this.delay();
+            this.alertMessage = 'Employee added successfully!';
+            this.alertType = 'success';
+            this.alertService.setAlert(this.alertMessage, this.alertType);
+            this.clearForm(form);
+            this.goToEmployeeList();
+          },
+          error => {
+            console.log(error);
+            this.delay();
+            this.alertMessage = 'Error adding employee.';
+            this.alertType = 'danger';
+          }
+        );
       },
       error => {
         console.log(error);
         this.delay();
-        this.alertMessage = 'Error adding employee.';
-        this.alertType = 'danger'; // Set alert type
+        this.alertMessage = 'Error registering user.';
+        this.alertType = 'danger';
       }
     );
   }
@@ -64,16 +87,15 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   clearForm(form: NgForm) {
-    this.employee = new Employee(); // Reset the employee object
-    form.resetForm(); // Reset the form
-    this.alertMessage = null; // Clear alert message
-    this.alertType = 'info'; // Reset alert type
+    this.employee = new Employee();
+    form.resetForm();
+    this.alertMessage = null;
+    this.alertType = 'info';
   }
 
-  delay(){
-    // Create an observable that emits a value after a 3-second delay
+  delay() {
     of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
+      delay(1000)
     ).subscribe(message => {
       console.log(message);
       this.isLoading = false;

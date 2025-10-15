@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.requestResponse.AuthenticateRequest;
-import com.example.demo.requestResponse.AuthenticationResponse;
-import com.example.demo.requestResponse.LoggedUserResponse;
-import com.example.demo.requestResponse.RegisterRequest;
+import com.example.demo.requestResponse.*;
 import com.example.demo.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,6 +45,18 @@ public class AuthController {
 
     ) throws IOException {
         authService.refreshToken(request, response);
+    }
+
+    @GetMapping("/isAuthenticated")
+    public ResponseEntity<?> isAuthenticated(HttpServletRequest request) {
+        IsAuthenticatedResponse isAuthenticatedResponse
+                = IsAuthenticatedResponse.builder()
+                .isAuthenticated(this.authService.isAuthenticated(request))
+                .build();
+        System.out.println("hello" + isAuthenticatedResponse.getIsAuthenticated());
+        return ResponseEntity.ok().body(
+                isAuthenticatedResponse
+        );
     }
 }
 

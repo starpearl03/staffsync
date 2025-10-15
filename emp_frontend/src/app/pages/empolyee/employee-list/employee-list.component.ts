@@ -12,7 +12,7 @@ import {delay, of} from "rxjs";
 })
 export class EmployeeListComponent implements OnInit {
   //spinner
-  isLoading = false;
+  isLoading = true;
   employees: Employee[] = [];
   searchTerm: string = ''; // Unified search term
   dropdownOpen = false; // To control dropdown visibility
@@ -24,11 +24,13 @@ export class EmployeeListComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.alertService.alert$.subscribe(alert => {
       this.alertMessage = alert.message;
       this.alertType = alert.type;
     });
     this.getEmployees();
+    this.delay();
   }
 
   goToEmployee(): void {

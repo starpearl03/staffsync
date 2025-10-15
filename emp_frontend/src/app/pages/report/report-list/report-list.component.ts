@@ -28,8 +28,10 @@ export class ReportListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.getReports();
     this.getEmployees();
+    this.delay();
   }
 
   getReports(): void {

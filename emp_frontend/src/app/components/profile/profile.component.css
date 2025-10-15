@@ -1,0 +1,68 @@
+/* profile.component.css */
+
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.dropdown-menu.show {
+  display: block; /* Show when dropdown is active */
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.az-header-profile {
+  padding: 15px;
+  border-radius: 8px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  color: #fff; /* White text color */
+  font-family: 'Arial', sans-serif; /* Modern font */
+}
+
+.az-user-email {
+  font-size: 14px; /* Smaller font size */
+  font-weight: 600; /* Semi-bold text */
+  margin-bottom: 3px; /* Space between email and role */
+  overflow: hidden; /* Ensure text fits within the div */
+  text-overflow: ellipsis; /* Show ellipsis if text is too long */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.az-user-role {
+  margin-top: 10px;
+  font-size: 12px; /* Smaller font size */
+  font-weight: 400; /* Regular weight */
+  color: darkblue; /* Slightly lighter color */
+  overflow: hidden; /* Ensure text fits within the div */
+  text-overflow: ellipsis; /* Show ellipsis if text is too long */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Arial', sans-serif; /* Modern font */
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0; /* Light grey background on hover */
+}
+
+

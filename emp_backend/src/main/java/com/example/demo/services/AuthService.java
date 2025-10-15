@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.Optional;
 
 import static com.example.demo.util.Util.getUserByToken;
 
@@ -44,7 +45,7 @@ public class AuthService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(User user){
+    public void revokeAllUserTokens(User user){
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if(validUserTokens.isEmpty()) return;
 
@@ -88,6 +89,7 @@ public class AuthService {
     ){
         User user = getUserByToken(request, jwtService, this.userRepository);
         return LoggedUserResponse.builder()
+                .role(user.getRole())
                 .email(user.getEmail())
                 .build();
     }
@@ -159,4 +161,33 @@ public class AuthService {
             throw new RuntimeException("Please enter valid refresh token");
         }
     }
+
+    public Boolean isAuthenticated(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return Boolean.FALSE;
+        }
+
+        String jwtToken = authHeader.split(" ")[1].trim();
+        String userEmail = this.jwtService.extractUsername(jwtToken);
+
+        Optional<User> userOptional = this.userRepository.findByEmail(userEmail);
+
+        // Check if the user exists and token is valid
+        if (userOptional.isPresent() && this.jwtService.isTokenValid(jwtToken, userOptional.get())) {
+
+            Optional<Token> tokenOptional = tokenRepository.findByToken(jwtToken);
+
+            if (tokenOptional.isPresent()) {
+                Token token = tokenOptional.get();
+                if (!token.getRevoked() && !token.getExpired()) {
+                    return Boolean.TRUE; // Token is valid
+                }
+            }
+        }
+
+        return Boolean.FALSE; // Token is either revoked, expired, or not found
+    }
+
 }
