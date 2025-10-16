@@ -39,4 +39,9 @@ export class TaskService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);
   }
+
+  // Fetch Tasks by Employee ID
+  getTasksByEmployeeId(employeeId: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/employee/${employeeId}`);
+  }
 }

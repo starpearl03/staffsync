@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Leave } from 'src/app/models/leave';
 import { Employee } from 'src/app/models/employee';
-import {LeaveService} from "../../../services/leave-services";
-import {Router} from "@angular/router";
-import {delay, of} from "rxjs";
-import {AlertService} from "../../../services/alert.service";
+import { LeaveService } from "../../../services/leave-services";
+import { Router } from "@angular/router";
+import { delay, of } from "rxjs";
+import { AlertService } from "../../../services/alert.service";
+import {AuthService} from "../../../services/auth-services.service";
 
 @Component({
   selector: 'app-add-leave',
@@ -20,16 +21,18 @@ export class AddLeaveComponent implements OnInit {
   alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
 
   constructor(
-    private leaveService: LeaveService, // Adjust the import path if needed
+    private leaveService: LeaveService,
     private employeeService: EmployeeService,
     private router: Router,
-    private alertService: AlertService,// Inject the Alert Service
+    private alertService: AlertService,
+    private authService: AuthService // Inject AuthService
   ) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.delay();
     this.loadEmployees();
+    this.setLoggedInEmployeeDetails();
   }
 
   loadEmployees(): void {
@@ -38,30 +41,44 @@ export class AddLeaveComponent implements OnInit {
     });
   }
 
+  setLoggedInEmployeeDetails(): void {
+    this.authService.getLoggedInEmployee().subscribe(
+      loggedInEmployee => {
+        this.leave.employee = loggedInEmployee; // Set the logged-in employee
+        this.leave.status = 'Pending'; // Set status to 'Pending'
+        this.isLoading = false; // Stop the loading spinner
+      },
+      error => {
+        this.alertMessage = "Failed to load employee details";
+        this.alertType = "warning";
+        console.error('Error fetching logged-in employee details:', error);
+      }
+    );
+  }
+
   onSubmit(): void {
     this.leaveService.createLeave(this.leave).subscribe(
       response => {
-        // Handle success (e.g., navigate to another page or show a success message)
+        // Handle success
         this.alertService.setAlert('Leave applied successfully!', 'success');
         this.router.navigate(['/leaves']);
         console.log('Leave added successfully:', response);
       },
       error => {
-        // Handle error (e.g., show an error message)
+        // Handle error
         this.alertMessage = "Failed to apply for leave";
-        this.alertType = "warning"
+        this.alertType = "warning";
         console.error('Error adding leave:', error);
       }
     );
   }
 
   delay(){
-    // Create an observable that emits a value after a 3-second delay
+    // Create an observable that emits a value after a 1-second delay
     of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
+      delay(1000) // 1000 milliseconds = 1 second
     ).subscribe(message => {
       console.log(message);
-      this.isLoading = false;
     });
   }
 }

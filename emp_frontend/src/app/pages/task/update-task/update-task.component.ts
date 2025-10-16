@@ -6,8 +6,9 @@ import { EmployeeService } from '../../../services/employee.service';
 import { Employee } from '../../../models/employee';
 import { Task } from '../../../models/task';
 import { Project } from '../../../models/project';
-import {delay, of} from "rxjs";
-import {AlertService} from "../../../services/alert.service";
+import { of, switchMap, catchError, delay } from "rxjs";
+import { AlertService } from "../../../services/alert.service";
+import { AuthService, LoggedUserResponse } from "../../../services/auth-services.service";
 
 @Component({
   selector: 'app-update-task',
@@ -22,21 +23,43 @@ export class UpdateTaskComponent implements OnInit {
   isLoading = false;
   alertMessage: string | null = null; // Alert message
   alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
+  userRole: string = ''; // Store the user role
+  isAdmin: boolean = false; // Flag to check if the user is an admin
+
   constructor(
     private taskService: TaskService,
     private projectService: ProjectService,
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.loadUserRole();
     this.loadTask();
     this.loadProjects();
     this.loadEmployees();
-    this.delay();
+  }
+
+  loadUserRole(): void {
+    this.authService.getLoggedInUser().pipe(
+      switchMap((loggedUser: LoggedUserResponse) => {
+        this.userRole = loggedUser.role;
+        this.isAdmin = this.userRole === 'ADMIN'; // Set isAdmin based on user role
+        return of(this.isAdmin);
+      }),
+      catchError(error => {
+        console.error('Error fetching user role:', error);
+        this.alertMessage = 'Error fetching user role.';
+        this.alertType = 'danger';
+        return of(false);
+      })
+    ).subscribe(() => {
+      this.isLoading = false; // Set loading to false after role is fetched
+    });
   }
 
   loadTask(): void {
@@ -66,16 +89,6 @@ export class UpdateTaskComponent implements OnInit {
     this.taskService.updateTask(this.task.id, this.task).subscribe(() => {
       this.alertService.setAlert('Task updated successfully!', 'success');
       this.router.navigate(['/tasks']);
-    });
-  }
-
-  delay(){
-    // Create an observable that emits a value after a 3-second delay
-    of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
-    ).subscribe(message => {
-      console.log(message);
-      this.isLoading = false;
     });
   }
 }

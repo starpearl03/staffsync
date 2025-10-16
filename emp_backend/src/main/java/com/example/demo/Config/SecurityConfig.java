@@ -34,64 +34,38 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize)->authorize
                         .requestMatchers("/api/v1/auth/**").permitAll()
 
-                        // Admin endpoints
-                        .requestMatchers("/api/v1/employees/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/leave/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/notification/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/project/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/report/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/task/**").hasRole(ADMIN.name())
+                        // Admin and Employee endpoints
+                        .requestMatchers("/api/v1/employees/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
+                        .requestMatchers("/api/v1/leave/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
+                        .requestMatchers("/api/v1/notification/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
+                        .requestMatchers("/api/v1/project/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
+                        .requestMatchers("/api/v1/report/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
+                        .requestMatchers("/api/v1/task/**").hasAnyRole(ADMIN.name(), EMPLOYEE.name())
 
-                        // Employee endpoints
-                        .requestMatchers("/api/v1/leave/**").hasAnyRole(EMPLOYEE.name())
-                        .requestMatchers("/api/v1/employees/**").hasAnyRole(EMPLOYEE.name())
-                        .requestMatchers("/api/v1/notification/**").hasAnyRole(EMPLOYEE.name())
-                        .requestMatchers("/api/v1/task/**").hasAnyRole(EMPLOYEE.name())
+                        // Admin CRUD operations
+                        .requestMatchers(POST, "/api/v1/employees/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/employees/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/employees/**").hasAuthority(ADMIN_DELETE.name())
 
-                        // Specific methods for admin and employee roles
-                        .requestMatchers(GET,"/api/v1/employees/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/employees/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/employees/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/employees/**").hasAuthority(ADMIN_DELETE.name())
+                        .requestMatchers(POST, "/api/v1/leave/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/leave/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/leave/**").hasAuthority(ADMIN_DELETE.name())
 
-                        .requestMatchers(GET,"/api/v1/leave/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/leave/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/leave/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/leave/**").hasAuthority(ADMIN_DELETE.name())
+                        .requestMatchers(POST, "/api/v1/notification/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/notification/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/notification/**").hasAuthority(ADMIN_DELETE.name())
 
-                        .requestMatchers(GET,"/api/v1/notification/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/notification/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/notification/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/notification/**").hasAuthority(ADMIN_DELETE.name())
+                        .requestMatchers(POST, "/api/v1/project/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/project/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/project/**").hasAuthority(ADMIN_DELETE.name())
 
-                        .requestMatchers(GET,"/api/v1/project/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/project/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/project/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/project/**").hasAuthority(ADMIN_DELETE.name())
+                        .requestMatchers(POST, "/api/v1/report/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/report/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/report/**").hasAuthority(ADMIN_DELETE.name())
 
-                        .requestMatchers(GET,"/api/v1/report/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/report/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/report/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/report/**").hasAuthority(ADMIN_DELETE.name())
-
-                        .requestMatchers(GET,"/api/v1/task/**").hasAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST,"/api/v1/task/**").hasAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/task/**").hasAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/task/**").hasAuthority(ADMIN_DELETE.name())
-
-                        .requestMatchers(GET,"/api/v1/leave/**").hasAnyAuthority(EMPLOYEE_READ.name())
-                        .requestMatchers(POST,"/api/v1/leave/**").hasAnyAuthority(EMPLOYEE_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/leave/**").hasAnyAuthority(EMPLOYEE_UPDATE.name())
-
-                        .requestMatchers(GET,"/api/v1/employees/**").hasAnyAuthority(EMPLOYEE_READ.name())
-                        .requestMatchers(PUT,"/api/v1/employees/**").hasAnyAuthority(EMPLOYEE_UPDATE.name())
-
-                        .requestMatchers(GET,"/api/v1/notification/**").hasAnyAuthority(EMPLOYEE_READ.name())
-                        .requestMatchers(POST,"/api/v1/notification/**").hasAnyAuthority(EMPLOYEE_CREATE.name())
-
-                        .requestMatchers(GET,"/api/v1/task/**").hasAnyAuthority(EMPLOYEE_READ.name())
-                        .requestMatchers(PUT,"/api/v1/task/**").hasAnyAuthority(EMPLOYEE_UPDATE.name())
-
+                        .requestMatchers(POST, "/api/v1/task/**").hasAuthority(ADMIN_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/task/**").hasAuthority(ADMIN_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/task/**").hasAuthority(ADMIN_DELETE.name())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement((session)->session

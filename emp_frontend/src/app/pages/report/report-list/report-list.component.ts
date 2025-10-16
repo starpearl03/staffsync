@@ -57,6 +57,7 @@ export class ReportListComponent implements OnInit {
         this.delay();
       }
     );
+    this.delay();
   }
 
   async generateReport(): Promise<void> {
@@ -117,10 +118,9 @@ export class ReportListComponent implements OnInit {
     // Implement this method as needed
   }
 
-  delay(){
-    // Create an observable that emits a value after a 3-second delay
+  delay() {
     of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
+      delay(1000)
     ).subscribe(message => {
       console.log(message);
       this.isLoading = false;

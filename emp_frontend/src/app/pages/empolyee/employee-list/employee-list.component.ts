@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../../models/employee';
 import { EmployeeService } from '../../../services/employee.service';
 import { Router } from '@angular/router';
-import {AlertService} from "../../../services/alert.service";
-import {delay, of} from "rxjs";
+import { AlertService } from "../../../services/alert.service";
+import { delay, of } from "rxjs";
 
 @Component({
   selector: 'app-employee-list',
@@ -11,8 +11,7 @@ import {delay, of} from "rxjs";
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  //spinner
-  isLoading = true;
+  isLoading = false;
   employees: Employee[] = [];
   searchTerm: string = ''; // Unified search term
   dropdownOpen = false; // To control dropdown visibility
@@ -75,13 +74,16 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getEmployeesList().subscribe({
       next: (data: Employee[]) => {
         this.employees = data;
-        this.delay();
       },
       error: (err) => {
+        this.delay();
         console.error('Error fetching employees:', err);
         this.delay();
+        this.alertMessage = 'Error fetching employee data.';
+        this.alertType = 'danger';
       }
     });
+    this.delay();
   }
 
   updateEmployee(id: number): void {
@@ -91,9 +93,8 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(id: number): void {
-    this.isLoading = true
+    this.isLoading = true;
     if (confirm(`Are you sure you want to delete Employee ID: ${id}?`)) {
-      this.delay();
       this.employeeService.deleteEmployee(id).subscribe({
         next: () => {
           console.log(`Deleted employee ID: ${id}`);
@@ -115,10 +116,9 @@ export class EmployeeListComponent implements OnInit {
     this.router.navigate(['details-employee', id]);
   }
 
-  delay(){
-    // Create an observable that emits a value after a 3-second delay
+  delay() {
     of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
+      delay(1000)
     ).subscribe(message => {
       console.log(message);
       this.isLoading = false;

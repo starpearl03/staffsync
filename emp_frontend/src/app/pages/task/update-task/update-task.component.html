@@ -6,7 +6,7 @@
       <div class="component-item">
         <label>Manage Tasks</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-task" routerLinkActive="active-link" class="nav-link">Create Task</a>
+          <a routerLink="/add-task" routerLinkActive="active-link" class="nav-link" *ngIf="isAdmin">Create Task</a>
           <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">View All Tasks</a>
         </nav>
       </div><!-- component-item -->
@@ -28,13 +28,13 @@
       <form (ngSubmit)="updateTask()" #taskForm="ngForm">
         <div class="form-container">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="title">Title</label>
                 <input [(ngModel)]="task.title" type="text" class="form-control" id="title" name="title" required />
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="status">Status</label>
                 <select [(ngModel)]="task.status" class="form-control" id="status" name="status" required>
@@ -42,37 +42,40 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="assignedDate">Assigned Date</label>
                 <input [(ngModel)]="task.assignedDate" type="date" class="form-control" id="assignedDate" name="assignedDate" required />
               </div>
             </div>
-            <div class="col-md-6">
+
+            <!-- Conditionally display Finished Date field based on user role -->
+            <div class="col-md-6" >
               <div class="form-group">
                 <label for="finishedDate">Finished Date</label>
                 <input [(ngModel)]="task.finishedDate" type="date" class="form-control" id="finishedDate" name="finishedDate" />
               </div>
             </div>
-            <div class="col-md-12">
+
+            <div class="col-md-12" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="deadlineDate">Deadline Date</label>
                 <input [(ngModel)]="task.deadlineDate" type="date" class="form-control" id="deadlineDate" name="deadlineDate" />
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea [(ngModel)]="task.description" class="form-control" id="description" name="description" required></textarea>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="duration">Duration (Hours)</label>
                 <input [(ngModel)]="task.durationInHours" type="number" class="form-control" id="duration" name="duration" />
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="project">Project</label>
                 <select [(ngModel)]="task.project.id" class="form-control" id="project" name="project" required>
@@ -80,7 +83,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" *ngIf="isAdmin">
               <div class="form-group">
                 <label for="employee">Employee</label>
                 <select [(ngModel)]="task.employee.id" class="form-control" id="employee" name="employee" required>

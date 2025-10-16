@@ -6,7 +6,8 @@
       <div class="component-item">
         <label>Manage Tasks</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-task" routerLinkActive="active-link" class="nav-link">Create Task</a>
+          <!-- Conditionally show links based on user role -->
+          <a *ngIf="isAdmin" routerLink="/add-task" routerLinkActive="active-link" class="nav-link">Create Task</a>
           <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">View All Tasks</a>
         </nav>
       </div><!-- component-item -->
@@ -62,12 +63,14 @@
                   <button (click)="editTask(task.id)" class="btn btn-icon text-secondary">
                     <span class="typcn typcn-edit"></span>
                   </button>
-                  <button (click)="deleteTask(task.id)" class="btn btn-icon text-danger">
+                  <button *ngIf="isAdmin" (click)="deleteTask(task.id)" class="btn btn-icon text-danger">
                     <span class="typcn typcn-trash"></span>
                   </button>
                 </div>
               </td>
-
+            </tr>
+            <tr *ngIf="filteredTasks.length === 0">
+              <td colspan="5" class="text-center no-tasks-message">No tasks found</td>
             </tr>
             </tbody>
           </table>

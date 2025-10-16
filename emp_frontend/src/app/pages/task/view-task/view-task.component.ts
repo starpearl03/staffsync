@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from "../../../services/task-service";
 import { Task } from "../../../models/task";
-import {delay, of} from "rxjs";
+import {catchError, delay, of, switchMap} from "rxjs";
+import {AuthService, LoggedUserResponse} from "../../../services/auth-services.service";
 
 @Component({
   selector: 'app-view-task',
@@ -14,15 +15,19 @@ export class ViewTaskComponent implements OnInit {
   isLoading = false;
   alertMessage: string | null = null; // Alert message
   alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
+  userRole: string = ''; // Store the user role
+  isAdmin: boolean = false; // Flag to check if the user is an admin
   constructor(
     private taskService: TaskService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.delay();
     this.loadTask();
+    this.loadUserRole();
   }
 
   loadTask(): void {
@@ -37,6 +42,24 @@ export class ViewTaskComponent implements OnInit {
     ).subscribe(message => {
       console.log(message);
       this.isLoading = false;
+    });
+  }
+
+  loadUserRole(): void {
+    this.authService.getLoggedInUser().pipe(
+      switchMap((loggedUser: LoggedUserResponse) => {
+        this.userRole = loggedUser.role;
+        this.isAdmin = this.userRole === 'ADMIN'; // Set isAdmin based on user role
+        return of(this.isAdmin);
+      }),
+      catchError(error => {
+        console.error('Error fetching user role:', error);
+        this.alertMessage = 'Error fetching user role.';
+        this.alertType = 'danger';
+        return of(false);
+      })
+    ).subscribe(() => {
+      this.isLoading = false; // Set loading to false after role is fetched
     });
   }
 }

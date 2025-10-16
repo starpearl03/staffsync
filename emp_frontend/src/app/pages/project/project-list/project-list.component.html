@@ -43,6 +43,9 @@
             </tr>
             </thead>
             <tbody>
+            <tr *ngIf="projects.length === 0">
+              <td colspan="4" class="text-center">No projects found</td>
+            </tr>
             <tr *ngFor="let project of projects">
               <th scope="row">{{ project.id }}</th>
               <td>{{ project.title }}</td>

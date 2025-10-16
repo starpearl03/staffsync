@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../../../services/auth-services.service";
-import {delay, of} from "rxjs";
-import {AlertService} from "../../../services/alert.service";
+import { delay, of } from "rxjs";
+import { AlertService } from "../../../services/alert.service";
+import { Employee } from '../../../models/employee';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,12 @@ export class LoginComponent {
   isLoading = false;
   alertMessage: string | null = null; // Alert message
   alertType: 'info' | 'success' | 'warning' | 'danger' = 'info'; // Alert type
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private alertService: AlertService
-    ) {}
+  ) {}
 
   onSubmit() {
     this.isLoading = true;
@@ -30,8 +32,20 @@ export class LoginComponent {
           this.delay();
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('refreshToken', response.refreshToken);
-          this.alertService.setAlert('User logged, Welcome back', 'success');
-          this.router.navigate(['/employees']); // Fixed spelling of "employees"
+          this.authService.getLoggedInUser().subscribe(user => {
+            if (user.role === 'ADMIN') {
+              this.router.navigate(['/employees']); // Redirect to employees if admin
+            } else {
+              this.authService.getLoggedInEmployee().subscribe(employee => {
+                if (employee) {
+                  this.router.navigate([`/details-employee/${employee.id}`]); // Redirect to employee details page
+                } else {
+                  this.alertService.setAlert('Unable to retrieve employee details', 'warning');
+                  this.router.navigate(['/login']); // Fallback to login if no employee details found
+                }
+              });
+            }
+          });
         },
         error => {
           this.delay();
@@ -42,10 +56,10 @@ export class LoginComponent {
     }
   }
 
-  delay(){
-    // Create an observable that emits a value after a 3-second delay
+  delay() {
+    // Create an observable that emits a value after a 1-second delay
     of('Delayed action executed').pipe(
-      delay(1000) // 3000 milliseconds = 3 seconds
+      delay(1000) // 1000 milliseconds = 1 second
     ).subscribe(message => {
       console.log(message);
       this.isLoading = false;

@@ -22,6 +22,7 @@
 
       <!-- Include the Alert Component -->
       <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+      <app-spinner *ngIf="isLoading"></app-spinner>
 
       <!-- Search Form -->
       <form (ngSubmit)="goToEmployee()" class="row g-3 mb-4">
@@ -49,6 +50,11 @@
             </tr>
             </thead>
             <tbody>
+            <!-- Check if employees array is empty -->
+            <tr *ngIf="employees.length === 0">
+              <td colspan="7" class="text-center">No employees found.</td>
+            </tr>
+            <!-- Display employees if available -->
             <tr *ngFor="let employee of employees">
               <th scope="row">{{employee.id}}</th>
               <td>{{employee.firstname}}</td>
@@ -57,7 +63,6 @@
               <td>{{employee.department}}</td>
               <td>{{employee.designation}}</td>
               <td>
-                <app-spinner *ngIf="isLoading"></app-spinner>
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                   <button (click)="updateEmployee(employee.id)" class="btn btn-icon">
@@ -71,7 +76,7 @@
                   </button>
                 </div>
               </td>
-
+            </tr>
             </tbody>
           </table>
         </div><!-- table-responsive -->

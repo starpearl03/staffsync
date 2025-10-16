@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.model.Employee;
 import com.example.demo.model.Token;
 import com.example.demo.model.TokenType;
 import com.example.demo.model.User;
@@ -32,6 +33,7 @@ public class AuthService {
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmployeeService employeeService;
 
     private void saveUserToken(User user, String jwtToken, TokenType type) {
         var token = Token
@@ -188,6 +190,20 @@ public class AuthService {
         }
 
         return Boolean.FALSE; // Token is either revoked, expired, or not found
+    }
+
+    public Employee loggedInEmployee(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Enter valid token");
+        }
+
+        String jwtToken = authHeader.split(" ")[1].trim();
+        String userEmail = this.jwtService.extractUsername(jwtToken);
+
+
+        return this.employeeService.findEmployeeByEmail(userEmail);
     }
 
 }

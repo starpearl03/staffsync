@@ -1,18 +1,27 @@
-<!-- profile.component.html -->
-
-<div class="dropdown az-profile-menu">
-  <a href="#" class="az-img-user"><img ngSrc="assets/img/profile.jpg" alt="" height="100" width="100"></a>
-  <div class="dropdown-menu">
+<div class="dropdown az-profile-menu" (click)="toggleDropdown($event)">
+  <!-- Toggle button -->
+  <a class="az-img-user">
+    <img ngSrc="assets/img/profile.jpg" alt="" height="100" width="100">
+  </a>
+  <!-- Dropdown menu -->
+  <div class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}">
     <div class="az-dropdown-header d-sm-none">
-      <a href="#" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+      <a class="az-header-arrow" (click)="toggleDropdown($event)">
+        <i class="icon ion-md-arrow-back"></i>
+      </a>
     </div>
     <div class="az-header-profile">
-      <h6>Aziana Pechon</h6>
-      <span>Premium Member</span>
+      <h6 class="az-user-email">{{ userName }}</h6> <!-- Display user email -->
+      <span class="az-user-role">{{ userRole }}</span>
     </div><!-- az-header-profile -->
-
-    <a href="#" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
-    <a href="#" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
-    <a routerLink="/page-signin" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign Out</a>
+    <a routerLink="/profile" class="dropdown-item" (click)="toggleDropdown($event)">
+      <i class="typcn typcn-user-outline"></i> My Profile
+    </a>
+    <a routerLink="/edit-profile" class="dropdown-item" (click)="toggleDropdown($event)">
+      <i class="typcn typcn-edit"></i> Edit Profile
+    </a>
+    <a (click)="logout()" class="dropdown-item">
+      <i class="typcn typcn-power-outline"></i> Sign Out
+    </a>
   </div><!-- dropdown-menu -->
 </div>

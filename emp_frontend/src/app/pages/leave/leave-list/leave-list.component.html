@@ -5,7 +5,7 @@
       <div class="component-item">
         <label>Manage Leaves</label>
         <nav class="nav flex-column">
-          <a routerLink="/add-leave" routerLinkActive="active-link" class="nav-link">Add Leave</a>
+          <a routerLink="/add-leave" routerLinkActive="active-link" class="nav-link">Apply for Leave</a>
           <a routerLink="/leaves" routerLinkActive="active-link" class="nav-link">View All Leaves</a>
         </nav>
       </div><!-- component-item -->
@@ -48,6 +48,7 @@
             </tr>
             </thead>
             <tbody>
+            <!-- Display leave data -->
             <tr *ngFor="let leave of leaves">
               <th scope="row">{{ leave.id }}</th>
               <td>{{ leave.description }}</td>
@@ -58,10 +59,11 @@
               <td>
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                  <button (click)="updateLeave(leave.id)" class="btn btn-icon">
+                  <!-- Show update and delete buttons only if the user is not an employee -->
+                  <button *ngIf="userRole !== 'EMPLOYEE'" (click)="updateLeave(leave.id)" class="btn btn-icon">
                     <span class="typcn typcn-edit"></span>
                   </button>
-                  <button (click)="deleteLeave(leave.id)" class="btn btn-icon text-danger">
+                  <button *ngIf="userRole !== 'EMPLOYEE'" (click)="deleteLeave(leave.id)" class="btn btn-icon text-danger">
                     <span class="typcn typcn-trash"></span>
                   </button>
                   <button (click)="viewLeaveDetails(leave.id)" class="btn btn-icon text-success">
@@ -69,6 +71,10 @@
                   </button>
                 </div>
               </td>
+            </tr>
+            <!-- Display message if no leaves found -->
+            <tr *ngIf="leaves.length === 0">
+              <td colspan="7" class="text-center">No leaves found</td>
             </tr>
             </tbody>
           </table>

@@ -31,4 +31,10 @@ export class NotificationService {
     const url = `${this.apiUrl}/details/${id}`;
     return this.http.get<Notification>(url);
   }
+
+  getAllNotifications(searchQuery: string = ''): Observable<Notification[]> {
+    const url = `${this.apiUrl}/1`;
+    return this.http.get<Notification[]>(url, {
+    });
+  }
 }

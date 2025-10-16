@@ -190,3 +190,37 @@
   color: #007bff; /* Blue color on hover */
   font-size: 1.05rem; /* Slightly larger font size on hover */
 }
+.empty-notifications {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background: linear-gradient(to right, #f0f4f8, #e2e6ea); /* Soft gradient background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.empty-notifications i {
+  font-size: 60px;
+  color: #007bff; /* Bright blue color for the icon */
+  display: block;
+  margin-bottom: 15px;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.empty-notifications i:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+.empty-message {
+  font-size: 22px;
+  font-weight: 600; /* Bold font weight */
+  color: #495057; /* Darker grey color for text */
+  margin: 0;
+  padding: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+}
+
+.empty-notifications p {
+  margin: 0;
+  padding: 0;
+}

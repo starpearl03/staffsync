@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Employee;
 import com.example.demo.requestResponse.*;
 import com.example.demo.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,6 +58,11 @@ public class AuthController {
         return ResponseEntity.ok().body(
                 isAuthenticatedResponse
         );
+    }
+
+    @GetMapping("/getLoggedInEmployee")
+    public ResponseEntity<Employee> getLoggedInEmployee(HttpServletRequest request){
+        return ResponseEntity.ok().body(this.authService.loggedInEmployee(request));
     }
 }
 

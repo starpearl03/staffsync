@@ -2,13 +2,13 @@
 
 <div class="dropdown az-header-notification" (click)="toggleDropdown($event)">
   <!-- Toggle button -->
-  <a href="#" [ngClass]="{'new': hasUnreadNotifications()}">
+  <a  [ngClass]="{'new': hasUnreadNotifications()}">
     <i class="typcn typcn-bell"></i> <!-- Notification bell icon -->
   </a>
   <!-- Dropdown menu -->
   <div class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}">
     <div class="az-dropdown-header mg-b-20 d-sm-none">
-      <a href="#" (click)="toggleDropdown($event)" class="az-header-arrow">
+      <a  (click)="toggleDropdown($event)" class="az-header-arrow">
         <i class="icon ion-md-arrow-back"></i>
       </a>
     </div>
