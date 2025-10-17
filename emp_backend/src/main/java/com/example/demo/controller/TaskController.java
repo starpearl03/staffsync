@@ -59,4 +59,15 @@ public class TaskController {
                 this.taskService.updateById(id,task)
         );
     }
+
+    // Fetch by id
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<Task> fetchByEmployeeId(@PathVariable Long id){
+        return ResponseEntity.ok()
+                .body(
+                        this.taskService.getTaskByUserId(id)
+                );
+    }
+
+
 }

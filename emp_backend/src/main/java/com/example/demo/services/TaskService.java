@@ -84,4 +84,9 @@ public class TaskService {
         // Additional logic to check if the project exists in the database can be added here if needed
         // For simplicity, assume the existence of the project ID is validated elsewhere
     }
+
+    public Task getTaskByUserId(Long employeeId){
+        return this.taskRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not retrieve task"));
+    }
 }

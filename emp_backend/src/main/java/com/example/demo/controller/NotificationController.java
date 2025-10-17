@@ -36,4 +36,13 @@ public class NotificationController {
         );
 
     }
+
+    // Get all notification for user
+    @GetMapping("/")
+    public ResponseEntity<List<Notification>> fetchAllN(){
+        return ResponseEntity.ok()
+                .body(
+                        this.notificationService.fetchAllN()
+                );
+    }
 }

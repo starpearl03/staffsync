@@ -61,4 +61,9 @@ public class EmployeeService {
 
         return Boolean.TRUE;
     }
+
+    public Employee findEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with email: " + email));
+    }
 }

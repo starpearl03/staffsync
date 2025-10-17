@@ -127,4 +127,8 @@ public class NotificationService {
             throw new IllegalArgumentException("Employee is not a recipient of this notification");
         }
     }
+
+    public List<Notification> fetchAllN() {
+        return this.notificationRepository.findAll();
+    }
 }
