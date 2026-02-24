@@ -1,15 +1,15 @@
 
-# EMP - Employment Management System
+# StaffSync — Employee Management System
 
-**Author:** Kudzai P Matizirofa
+**Author:** Felistas V. Charuka
 
 ## Project Title
 
-EMP - Employment Management System
+StaffSync — Employee Management System
 
 ## Description
 
-EMP is an Employment Management System designed to streamline the management of employees, projects, and tasks within an organization. This system facilitates CRUD (Create, Read, Update, Delete) operations for employees and projects, enables task management, and provides functionalities to monitor and export employee performance. The system features a robust backend powered by Spring Boot, a dynamic frontend built with Angular, and uses PostgreSQL as its database.
+StaffSync is an employee management system designed to streamline the management of employees, projects, and tasks within an organization. This system facilitates CRUD (Create, Read, Update, Delete) operations for employees and projects, enables task management, and provides functionalities to monitor and export employee performance. The system features a robust backend powered by Spring Boot, a dynamic frontend built with Angular, and uses PostgreSQL as its database.
 
 ## Scope
 
@@ -23,8 +23,8 @@ The primary objectives of the EMP project are:
 
 The project is organized into two main folders:
 
-- **`emp_frontend`**: Contains the Angular application for the frontend interface.
-- **`emp_backend`**: Contains the Spring Boot application for the backend services.
+- **`staffsync_frontend`**: Contains the Angular application for the frontend interface.
+- **`staffsync_backend`**: Contains the Spring Boot application for the backend services.
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ To get started with the project, follow these instructions for setting up the fr
 
 ### Frontend (Angular)
 
-1. Navigate to the `emp_frontend` directory.
+1. Navigate to the `staffsync_frontend` directory.
 2. Install the required dependencies:
    ```bash
    npm install
@@ -45,7 +45,7 @@ To get started with the project, follow these instructions for setting up the fr
 
 ### Backend (Spring Boot)
 
-1. Navigate to the `emp_backend` directory.
+1. Navigate to the `staffsync_backend` directory.
 2. Build and run the Spring Boot application:
    ```bash
    ./mvnw spring-boot:run
@@ -107,8 +107,8 @@ For a visual demonstration of the application, refer to the following screenshot
 
 For more details, visit the following README files in the respective project folders:
 
-- **[Frontend README](path-to-emp_frontend-readme)**: Detailed information about the Angular frontend setup and usage.
-- **[Backend README](path-to-emp_backend-readme)**: Detailed information about the Spring Boot backend setup and usage.
+- **[Frontend README](path-to-staffsync_frontend-readme)**: Detailed information about the Angular frontend setup and usage.
+- **[Backend README](path-to-staffsync_backend-readme)**: Detailed information about the Spring Boot backend setup and usage.
 
 Feel free to explore and contribute to the project!
 ```
